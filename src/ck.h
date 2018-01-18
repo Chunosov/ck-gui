@@ -1,0 +1,41 @@
+#ifndef CK_H
+#define CK_H
+
+#include <QProcess>
+#include <QStringList>
+
+class CkEntry
+{
+public:
+    QString uid;
+    QString name;
+
+    QString str() const { return QString("%1: %2").arg(uid, name); }
+
+    bool isEmpty() const { return uid.isEmpty(); }
+};
+
+//-----------------------------------------------------------------------------
+
+class CK
+{
+public:
+    CK();
+
+    CkEntry queryEnvByUid(const QString& uid);
+    QList<CkEntry> queryEnvsByTags(const QString& tags);
+    void refreshEnv(const QString& uid);
+
+    static QString envPath(const QString& uid);
+    static QString envScriptPath(const QString& uid);
+    static QString envMetaPath(const QString& uid);
+
+private:
+    QProcess _ck;
+    QString _reposPath;
+    QStringList _args;
+
+    QStringList ck(const QStringList &args);
+};
+
+#endif // CK_H

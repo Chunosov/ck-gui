@@ -1,0 +1,4 @@
+[General]
+ck_bin_path=/path/to/ck/bin
+ck_exe_name=./ck
+ck_repos_path=/path/to/CK

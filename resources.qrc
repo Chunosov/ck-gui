@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file alias="main">./img/icon.png</file>
+        <file alias="envs">./img/gears.svg</file>
+        <file alias="editor">./img/pencil.svg</file>
+    </qresource>
+</RCC>
