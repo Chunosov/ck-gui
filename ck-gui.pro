@@ -32,22 +32,24 @@ RESOURCES += \
 SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
-    src/envlistwidget.cpp \
     src/ck.cpp \
     src/appconfig.cpp \
     src/appevents.cpp \
     src/ckjson.cpp \
     src/utils.cpp \
     src/jsonformat.cpp \
-    src/texteditorwindow.cpp
+    src/texteditorwindow.cpp \
+    src/searchwindowbase.cpp \
+    src/searchenvswindow.cpp
 
 HEADERS += \
     src/mainwindow.h \
-    src/envlistwidget.h \
     src/ck.h \
     src/appconfig.h \
     src/appevents.h \
     src/ckjson.h \
     src/utils.h \
     src/jsonformat.h \
-    src/texteditorwindow.h
+    src/texteditorwindow.h \
+    src/searchwindowbase.h \
+    src/searchenvswindow.h

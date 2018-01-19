@@ -2,7 +2,7 @@
 
 #include "appevents.h"
 #include "ck.h"
-#include "envlistwidget.h"
+#include "searchenvswindow.h"
 #include "texteditorwindow.h"
 #include "orion/widgets/OriMdiToolBar.h"
 
@@ -70,7 +70,7 @@ void MainWindow::onError(const QString& msg)
 
 void MainWindow::openEnvsWindow()
 {
-    showSubWindow(new EnvListWidget());
+    showSubWindow(new SearchEnvsWindow());
 }
 
 void MainWindow::textEditorRequested(const QString& fileName)
