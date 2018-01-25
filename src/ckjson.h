@@ -7,6 +7,9 @@
 class CkJson
 {
 public:
+    CkJson() {}
+    CkJson(const QJsonObject& json): _json(json) {}
+
     const QJsonObject& json() const { return _json; }
     bool ok() const { return _ok; }
 
@@ -29,6 +32,22 @@ private:
 
 //-----------------------------------------------------------------------------
 
+class CkEnvDep : public CkJson
+{
+public:
+    CkEnvDep() {}
+    CkEnvDep(const QString& name, const QJsonObject& json): CkJson(json), _name(name) {}
+
+    QString name() const { return valueStr("name"); }
+    QString uoa() const { return valueStr("uoa"); }
+    QString version() const { return valueStr("ver"); }
+
+private:
+    QString _name;
+};
+
+//-----------------------------------------------------------------------------
+
 class CkEnvMeta : public CkJson
 {
 public:
@@ -36,6 +55,8 @@ public:
 
     QStringList tags() const;
     QString full_path() const { return valueStr({"customize", "full_path"}); }
+    QString env_script() const { return valueStr("env_script"); }
+    QVector<CkEnvDep> deps() const;
 };
 
 //-----------------------------------------------------------------------------

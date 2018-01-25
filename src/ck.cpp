@@ -125,3 +125,8 @@ void CK::refreshEnv(const QString& uid)
 {
     ck({ "refresh", "env:" + uid });
 }
+
+bool CK::isFileExists(const QString& path)
+{
+    return QFile(path).exists();
+}

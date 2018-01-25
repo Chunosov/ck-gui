@@ -92,6 +92,15 @@ QStringList CkEnvMeta::tags() const
     return tags;
 }
 
+QVector<CkEnvDep> CkEnvMeta::deps() const
+{
+    QVector<CkEnvDep> res;
+    QJsonObject deps = _json["deps"].toObject();
+    for (auto dep : deps.keys())
+        res.append(CkEnvDep(dep, deps[dep].toObject()));
+    return res;
+}
+
 //-----------------------------------------------------------------------------
 
 CkInfo::CkInfo(const QString& path)

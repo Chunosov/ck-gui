@@ -30,6 +30,8 @@ public:
     static QString envScriptPath(const QString& uid);
     static QString envMetaPath(const QString& uid);
 
+    static bool isFileExists(const QString& path);
+
 private:
     QProcess _ck;
     QString _reposPath;

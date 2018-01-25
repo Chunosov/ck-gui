@@ -2,6 +2,7 @@
 
 #include "appevents.h"
 #include "ck.h"
+#include "utils.h"
 
 #include <QMenu>
 #include <QTextBrowser>
@@ -60,10 +61,42 @@ void SearchEnvsWindow::resultSelected(QListWidgetItem *current, QListWidgetItem 
 
 void SearchEnvsWindow::showEnvInfo(const CkEnvInfo& info, const CkEnvMeta& meta)
 {
+    static QString indent("&nbsp;&nbsp;&nbsp;&nbsp;");
+
+    auto env_uid = info.backup_data_uid();
+    auto full_path = meta.full_path();
+    auto env_script_path = Utils::makePath({ CK::envPath(env_uid), meta.env_script() });
+
     QString s =
-        "<p>" + formatValueHtml("uid", info.backup_data_uid()) +
-        "<p>" + formatValueHtml("name", info.data_name()) +
-        "<p>" + formatValueHtml("full_path", meta.full_path());
+        FormatValue("", info.data_name())
+                    .asHeader()
+                    .format()
+
+        + "<p>" + FormatValue("uid", env_uid)
+                    .format()
+
+        + "<p>" + FormatValue("env_script", env_script_path)
+                    .withState(CK::isFileExists(env_script_path) ? FormatValue::Normal : FormatValue::Error)
+                    .format()
+
+        + "<p>" + FormatValue("customize/full_path", full_path)
+                    .withState(CK::isFileExists(full_path) ? FormatValue::Normal : FormatValue::Error)
+                    .format()
+            ;
+
+    auto deps = meta.deps();
+    if (!deps.isEmpty())
+    {
+        s += "<p>" + FormatValue("deps", "").format();
+        for (auto dep : deps)
+        {
+            s += QString("<br>%1%2 <b>%3</b>").arg(indent, dep.name(), dep.version());
+            auto uoa = dep.uoa();
+            if (!uoa.isEmpty())
+                s += QString(" <span style='color: gray'>(%1)</span>").arg(uoa);
+        }
+    }
+
     _infoPanel->setHtml(s);
 }
 

@@ -13,6 +13,22 @@ class QMenu;
 class QTextBrowser;
 QT_END_NAMESPACE
 
+class FormatValue
+{
+public:
+    enum ValueState { Normal, Error };
+    FormatValue(const QString& name, const QString& value): _name(name), _value(value){}
+    FormatValue& withState(ValueState state) { _state = state; return *this; }
+    FormatValue& asHeader() { _isHeader = true; return *this; }
+    QString format();
+private:
+    ValueState _state = Normal;
+    QString _name;
+    QString _value;
+    QString stateStyle();
+    bool _isHeader = false;
+};
+
 class SearchWindowBase : public QWidget
 {
     Q_OBJECT
@@ -35,8 +51,6 @@ protected:
     QString searchText() const;
     QString selectedUid() const;
     QString uidOf(QListWidgetItem* item) const;
-
-    QString formatValueHtml(const QString& name, const QString& value);
 
     void cleanResults();
     void addResult(const QString& uid, const QString& text);

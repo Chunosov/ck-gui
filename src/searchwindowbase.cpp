@@ -12,6 +12,36 @@
 #include <QSplitter>
 #include <QTextBrowser>
 
+QString FormatValue::stateStyle()
+{
+    static QString normalStyle("color: black");
+    static QString errorStyle("color: red");
+    switch (_state)
+    {
+    case Normal: return normalStyle;
+    case Error: return errorStyle;
+    }
+    return QString();
+}
+
+QString FormatValue::format()
+{
+    if (_isHeader)
+    {
+        return QString("<span style='font: bold 14pt'>%1</span>").arg(_value);
+    }
+
+    QString nameStr;
+    if (!_name.isEmpty())
+        nameStr = QString("<b>%1</b>: ").arg(_name);
+
+    QString valueStr;
+    if (!_value.isEmpty())
+        valueStr = QString("<span style='%2'>%1</span>").arg(_value, stateStyle());
+
+    return QString("%1%2").arg(nameStr, valueStr);
+}
+
 SearchWindowBase::SearchWindowBase(QWidget *parent) : QWidget(parent)
 {
     _searchBox = new QLineEdit;
@@ -107,11 +137,6 @@ void SearchWindowBase::copyEnvUid() const
 QString SearchWindowBase::searchText() const
 {
     return _searchBox->text().trimmed();
-}
-
-QString SearchWindowBase::formatValueHtml(const QString& name, const QString& value)
-{
-    return QString("<b>%1</b>: %2").arg(name, value);
 }
 
 void SearchWindowBase::cleanResults()
