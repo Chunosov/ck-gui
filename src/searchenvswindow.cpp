@@ -68,7 +68,7 @@ void SearchEnvsWindow::showEnvInfo(const CkEnvInfo& info, const CkEnvMeta& meta)
     auto env_script_path = Utils::makePath({ CK::envPath(env_uid), meta.env_script() });
 
     QString s =
-        FormatValue("", info.data_name())
+        FormatValue("", QString("<b>%1</b> %2").arg(info.data_name(), meta.version()))
                     .asHeader()
                     .format()
 
@@ -79,7 +79,7 @@ void SearchEnvsWindow::showEnvInfo(const CkEnvInfo& info, const CkEnvMeta& meta)
                     .withState(CK::isFileExists(env_script_path) ? FormatValue::Normal : FormatValue::Error)
                     .format()
 
-        + "<p>" + FormatValue("customize/full_path", full_path)
+        + "<p>" + FormatValue("full_path", full_path)
                     .withState(CK::isFileExists(full_path) ? FormatValue::Normal : FormatValue::Error)
                     .format()
             ;

@@ -40,7 +40,8 @@ SOURCES += \
     src/jsonformat.cpp \
     src/texteditorwindow.cpp \
     src/searchwindowbase.cpp \
-    src/searchenvswindow.cpp
+    src/searchenvswindow.cpp \
+    src/searchprogramswindow.cpp
 
 HEADERS += \
     src/mainwindow.h \
@@ -52,4 +53,5 @@ HEADERS += \
     src/jsonformat.h \
     src/texteditorwindow.h \
     src/searchwindowbase.h \
-    src/searchenvswindow.h
+    src/searchenvswindow.h \
+    src/searchprogramswindow.h

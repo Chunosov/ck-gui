@@ -28,7 +28,7 @@ QString FormatValue::format()
 {
     if (_isHeader)
     {
-        return QString("<span style='font: bold 14pt'>%1</span>").arg(_value);
+        return QString("<span style='font: 14pt'>%1</span>").arg(_value);
     }
 
     QString nameStr;
@@ -78,6 +78,8 @@ SearchWindowBase::SearchWindowBase(QWidget *parent) : QWidget(parent)
     auto splitter = new QSplitter;
     splitter->addWidget(searchPanel);
     splitter->addWidget(_infoPanel);
+    splitter->setStretchFactor(0, 1);
+    splitter->setStretchFactor(1, 2);
 
     Ori::Layouts::LayoutV({splitter})
             .setMargin(0)

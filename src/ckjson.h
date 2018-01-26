@@ -55,6 +55,7 @@ public:
 
     QStringList tags() const;
     QString full_path() const { return valueStr({"customize", "full_path"}); }
+    QString version() const { return valueStr({"customize", "version"}); }
     QString env_script() const { return valueStr("env_script"); }
     QVector<CkEnvDep> deps() const;
 };
