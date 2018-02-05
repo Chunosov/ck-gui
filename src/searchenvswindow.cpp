@@ -3,6 +3,7 @@
 #include "appevents.h"
 #include "ck.h"
 #include "utils.h"
+#include "orion/helpers/OriDialogs.h"
 
 #include <QMenu>
 #include <QTextBrowser>
@@ -14,15 +15,15 @@ SearchEnvsWindow::SearchEnvsWindow(QWidget *parent) : SearchWindowBase(parent)
     _resultsContextMenu->addAction("Edit script", this, &SearchEnvsWindow::editEnvScript);
     _resultsContextMenu->addSeparator();
     _resultsContextMenu->addAction("Refresh env", this, &SearchEnvsWindow::refreshEnv);
+    _resultsContextMenu->addAction("Delete env", this, &SearchEnvsWindow::deleteEnv);
 
-    populateEnvs("", "");
+    findAll();
 }
 
 void SearchEnvsWindow::populateEnvs(const QString& tags, const QString& uid)
 {
-    CK ck;
     cleanResults();
-    for (const CkEntry& env : ck.queryEnvsByTags(tags))
+    for (const CkEntry& env : CK::instance().queryEnvsByTags(tags))
     {
         if (!uid.isEmpty())
         {
@@ -32,14 +33,32 @@ void SearchEnvsWindow::populateEnvs(const QString& tags, const QString& uid)
     }
 }
 
+void SearchEnvsWindow::findAll()
+{
+    _lastSearch = SEARCH_ALL;
+    populateEnvs("", "");
+}
+
 void SearchEnvsWindow::findByTags()
 {
+    _lastSearch = SEARCH_TAG;
     populateEnvs(searchText(), "");
 }
 
 void SearchEnvsWindow::findByUid()
 {
+    _lastSearch = SEARCH_UID;
     populateEnvs("", searchText());
+}
+
+void SearchEnvsWindow::repeatSearch()
+{
+    switch (_lastSearch)
+    {
+    case SEARCH_ALL: findAll(); break;
+    case SEARCH_TAG: findByTags(); break;
+    case SEARCH_UID: findByUid(); break;
+    }
 }
 
 void SearchEnvsWindow::resultSelected(QListWidgetItem *current, QListWidgetItem *previous)
@@ -82,8 +101,12 @@ void SearchEnvsWindow::showEnvInfo(const CkEnvInfo& info, const CkEnvMeta& meta)
         + "<p>" + FormatValue("full_path", full_path)
                     .withState(CK::isFileExists(full_path) ? FormatValue::Normal : FormatValue::Error)
                     .format()
+
+        + "<p>" + FormatValue("tags", meta.tags().join(", "))
+                    .format()
             ;
 
+    // Format deps
     auto deps = meta.deps();
     if (!deps.isEmpty())
     {
@@ -112,5 +135,16 @@ void SearchEnvsWindow::editMeta()
 
 void SearchEnvsWindow::refreshEnv()
 {
-    CK().refreshEnv(selectedUid());
+    CK::instance().refreshEnv(selectedUid());
+}
+
+void SearchEnvsWindow::deleteEnv()
+{
+    auto uid = selectedUid();
+    if (uid.isEmpty()) return;
+    if (Ori::Dlg::yes(tr("Are you sure to delete env %1").arg(uid)))
+    {
+        CK::instance().removeEnv(uid);
+        repeatSearch();
+    }
 }

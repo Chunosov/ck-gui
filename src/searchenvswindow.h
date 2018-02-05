@@ -13,16 +13,22 @@ public:
     explicit SearchEnvsWindow(QWidget *parent = nullptr);
 
 protected:
+    void findAll();
     void findByTags() override;
     void findByUid() override;
     void editMeta() override;
     void resultSelected(QListWidgetItem *current, QListWidgetItem *previous) override;
 
 private:
+    enum SearchMode { SEARCH_ALL, SEARCH_TAG, SEARCH_UID };
     void populateEnvs(const QString& tags, const QString &uid);
     void showEnvInfo(const CkEnvInfo &info, const CkEnvMeta& meta);
     void editEnvScript();
+    void repeatSearch();
     void refreshEnv();
+    void deleteEnv();
+
+    SearchMode _lastSearch;
 };
 
 #endif // ENVLISTWIDGET_H

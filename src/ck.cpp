@@ -9,6 +9,12 @@
 #include <QDebug>
 #include <QDir>
 
+CK& CK::instance()
+{
+    static CK ck;
+    return ck;
+}
+
 CK::CK()
 {
     _reposPath = AppConfig::ckReposPath();
@@ -124,6 +130,11 @@ QString CK::envMetaPath(const QString& uid)
 void CK::refreshEnv(const QString& uid)
 {
     ck({ "refresh", "env:" + uid });
+}
+
+void CK::removeEnv(const QString& uid)
+{
+    ck({ "rm", "env:" + uid, "-f" });
 }
 
 bool CK::isFileExists(const QString& path)

@@ -22,9 +22,12 @@ class CK
 public:
     CK();
 
+    static CK& instance();
+
     CkEntry queryEnvByUid(const QString& uid);
     QList<CkEntry> queryEnvsByTags(const QString& tags);
     void refreshEnv(const QString& uid);
+    void removeEnv(const QString& uid);
 
     static QString envPath(const QString& uid);
     static QString envScriptPath(const QString& uid);
