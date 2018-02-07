@@ -1,6 +1,7 @@
 #include "searchwindowbase.h"
 #include "utils.h"
 #include "orion/helpers/OriLayouts.h"
+#include "orion/helpers/OriDialogs.h"
 
 #include <QApplication>
 #include <QClipboard>
@@ -57,7 +58,7 @@ SearchWindowBase::SearchWindowBase(QWidget *parent) : QWidget(parent)
     _resultsList->setAlternatingRowColors(true);
     _resultsList->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(_resultsList, &QListWidget::customContextMenuRequested, this, &SearchWindowBase::resultsContextMenuRequested);
-    connect(_resultsList, &QListWidget::currentItemChanged, this, &SearchWindowBase::resultSelected);
+    connect(_resultsList, &QListWidget::currentItemChanged, this, &SearchWindowBase::resultsItemSelected);
 
     auto searchPanel = new QWidget;
     Ori::Layouts::LayoutV({
@@ -120,6 +121,17 @@ void SearchWindowBase::resultsContextMenuRequested(const QPoint &pos)
     _resultsContextMenu->popup(_resultsList->mapToGlobal(pos));
 }
 
+void SearchWindowBase::resultsItemSelected(QListWidgetItem *current, QListWidgetItem *previous)
+{
+    Q_UNUSED(previous)
+    if (!current) return;
+
+    QString uid = uidOf(current);
+    if (uid.isEmpty()) return;
+
+    resultSelected(uid);
+}
+
 QString SearchWindowBase::selectedUid() const
 {
     auto items = _resultsList->selectedItems();
@@ -153,4 +165,19 @@ void SearchWindowBase::addResult(const QString& uid, const QString& text)
     item->setToolTip(uid);
     item->setData(Qt::UserRole, uid);
     _resultsList->addItem(item);
+}
+
+void SearchWindowBase::showHtmlInfo(const QString& html)
+{
+    _infoPanel->setHtml(html);
+}
+
+void SearchWindowBase::findByTags()
+{
+    Ori::Dlg::info("Not implemented");
+}
+
+void SearchWindowBase::findByUid()
+{
+    Ori::Dlg::info("Not implemented");
 }

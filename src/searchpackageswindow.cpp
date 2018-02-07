@@ -1,40 +1,40 @@
-#include "searchprogramswindow.h"
+#include "searchpackageswindow.h"
 
 #include "ck.h"
 
-SearchProgramsWindow::SearchProgramsWindow(QWidget *parent) : SearchWindowBase(parent)
+SearchPackagesWindow::SearchPackagesWindow(QWidget *parent) : SearchWindowBase(parent)
 {
-    setTitleAndIcon("Programs", ":/icon/programs");
+    setTitleAndIcon("Packages", ":/icon/packages");
 
     findAll();
 }
 
-void SearchProgramsWindow::populate(const QString& tags)
+void SearchPackagesWindow::populate(const QString& tags)
 {
     cleanResults();
-    for (const QString& name : CK::instance().queryProgramsByTags(tags))
+    for (const QString& name : CK::instance().queryPackagesByTags(tags))
     {
         QStringList parts = name.split(':');
         addResult(name, parts.last());
     }
 }
 
-void SearchProgramsWindow::findAll()
+void SearchPackagesWindow::findAll()
 {
     populate("");
 }
 
-void SearchProgramsWindow::findByTags()
+void SearchPackagesWindow::findByTags()
 {
     populate(searchText());
 }
 
-void SearchProgramsWindow::resultSelected(const QString& uid)
+void SearchPackagesWindow::resultSelected(const QString& uid)
 {
     showInfo(uid);
 }
 
-void SearchProgramsWindow::showInfo(const QString& uid)
+void SearchPackagesWindow::showInfo(const QString& uid)
 {
     auto parts = uid.split(':');
     auto name = parts.last();
@@ -49,4 +49,3 @@ void SearchProgramsWindow::showInfo(const QString& uid)
 
     showHtmlInfo(s);
 }
-

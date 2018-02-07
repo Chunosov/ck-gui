@@ -3,6 +3,7 @@
 #include "appevents.h"
 #include "ck.h"
 #include "searchenvswindow.h"
+#include "searchpackageswindow.h"
 #include "searchprogramswindow.h"
 #include "texteditorwindow.h"
 #include "orion/widgets/OriMdiToolBar.h"
@@ -53,7 +54,8 @@ void MainWindow::createMenu()
 
     m = menuBar()->addMenu(tr("&Tool"));
     m->addAction(tr("Envs"), this, &MainWindow::openEnvsWindow);
-    //m->addAction(tr("Programs"), this, &MainWindow::openProgamsWindow);
+    m->addAction(tr("Packages"), this, &MainWindow::openPackagesWindow);
+    m->addAction(tr("Programs"), this, &MainWindow::openProgramsWindow);
 }
 
 void MainWindow::createToolBars()
@@ -75,7 +77,12 @@ void MainWindow::openEnvsWindow()
     showSubWindow(new SearchEnvsWindow());
 }
 
-void MainWindow::openProgamsWindow()
+void MainWindow::openPackagesWindow()
+{
+    showSubWindow(new SearchPackagesWindow());
+}
+
+void MainWindow::openProgramsWindow()
 {
     showSubWindow(new SearchProgramsWindow());
 }

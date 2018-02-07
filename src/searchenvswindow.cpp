@@ -6,7 +6,6 @@
 #include "orion/helpers/OriDialogs.h"
 
 #include <QMenu>
-#include <QTextBrowser>
 
 SearchEnvsWindow::SearchEnvsWindow(QWidget *parent) : SearchWindowBase(parent)
 {
@@ -61,14 +60,8 @@ void SearchEnvsWindow::repeatSearch()
     }
 }
 
-void SearchEnvsWindow::resultSelected(QListWidgetItem *current, QListWidgetItem *previous)
+void SearchEnvsWindow::resultSelected(const QString& uid)
 {
-    Q_UNUSED(previous)
-    if (!current) return;
-
-    QString uid = uidOf(current);
-    if (uid.isEmpty()) return;
-
     CkEnvMeta meta(uid);
     if (!meta.ok()) return;
 
@@ -120,7 +113,7 @@ void SearchEnvsWindow::showEnvInfo(const CkEnvInfo& info, const CkEnvMeta& meta)
         }
     }
 
-    _infoPanel->setHtml(s);
+    showHtmlInfo(s);
 }
 
 void SearchEnvsWindow::editEnvScript()

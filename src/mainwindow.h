@@ -25,7 +25,8 @@ private:
     void createDocks();
     void onError(const QString& msg);
     void openEnvsWindow();
-    void openProgamsWindow();
+    void openPackagesWindow();
+    void openProgramsWindow();
     void textEditorRequested(const QString& fileName);
     void showSubWindow(QWidget* w);
 };

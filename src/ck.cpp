@@ -77,6 +77,16 @@ CkEntry CK::queryEnvByUid(const QString& uid)
     return entry;
 }
 
+QStringList CK::queryPackagesByTags(const QString& tags)
+{
+    return ck({ "search", "package", "--tags="+tags });
+}
+
+QStringList CK::queryProgramsByTags(const QString& tags)
+{
+    return ck({ "search", "program", "--tags="+tags });
+}
+
 QStringList CK::ck(const QStringList& args)
 {
     static QString errorMarker("CK error:");

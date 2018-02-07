@@ -17,7 +17,7 @@ protected:
     void findByTags() override;
     void findByUid() override;
     void editMeta() override;
-    void resultSelected(QListWidgetItem *current, QListWidgetItem *previous) override;
+    void resultSelected(const QString& uid) override;
 
 private:
     enum SearchMode { SEARCH_ALL, SEARCH_TAG, SEARCH_UID };

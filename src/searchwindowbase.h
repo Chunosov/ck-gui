@@ -43,10 +43,10 @@ protected:
     QListWidget* _resultsList;
     QTextBrowser* _infoPanel;
 
-    virtual void findByTags() {}
-    virtual void findByUid() {}
+    virtual void findByTags();
+    virtual void findByUid();
     virtual void editMeta() {}
-    virtual void resultSelected(QListWidgetItem *current, QListWidgetItem *previous) { Q_UNUSED(current); Q_UNUSED(previous); }
+    virtual void resultSelected(const QString& uid) { Q_UNUSED(uid); }
 
     QString searchText() const;
     QString selectedUid() const;
@@ -54,6 +54,7 @@ protected:
 
     void cleanResults();
     void addResult(const QString& uid, const QString& text);
+    void showHtmlInfo(const QString& html);
 
 private:
     QLineEdit* _searchBox;
@@ -65,6 +66,7 @@ private:
     QAction* makeHeaderItem(QMenu* menu);
 
     void resultsContextMenuRequested(const QPoint &pos);
+    void resultsItemSelected(QListWidgetItem *current, QListWidgetItem *previous);
 };
 
 #endif // SEARCHWINDOWBASE_H

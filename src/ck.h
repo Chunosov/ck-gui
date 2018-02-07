@@ -29,6 +29,9 @@ public:
     void refreshEnv(const QString& uid);
     void removeEnv(const QString& uid);
 
+    QStringList queryPackagesByTags(const QString& tags);
+    QStringList queryProgramsByTags(const QString& tags);
+
     static QString envPath(const QString& uid);
     static QString envScriptPath(const QString& uid);
     static QString envMetaPath(const QString& uid);

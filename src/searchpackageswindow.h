@@ -1,14 +1,14 @@
-#ifndef SEARCHPROGRAMSWINDOW_H
-#define SEARCHPROGRAMSWINDOW_H
+#ifndef SEARCHPACKAGESWINDOW_H
+#define SEARCHPACKAGESWINDOW_H
 
 #include "searchwindowbase.h"
 
-class SearchProgramsWindow : public SearchWindowBase
+class SearchPackagesWindow : public SearchWindowBase
 {
     Q_OBJECT
 
 public:
-    explicit SearchProgramsWindow(QWidget *parent = nullptr);
+    explicit SearchPackagesWindow(QWidget *parent = nullptr);
 
 protected:
     void findAll();
@@ -20,4 +20,4 @@ private:
     void showInfo(const QString& uid);
 };
 
-#endif // SEARCHPROGRAMSWINDOW_H
+#endif // SEARCHPACKAGESWINDOW_H

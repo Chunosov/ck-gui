@@ -41,7 +41,8 @@ SOURCES += \
     src/texteditorwindow.cpp \
     src/searchwindowbase.cpp \
     src/searchenvswindow.cpp \
-    src/searchprogramswindow.cpp
+    src/searchprogramswindow.cpp \
+    src/searchpackageswindow.cpp
 
 HEADERS += \
     src/mainwindow.h \
@@ -54,4 +55,5 @@ HEADERS += \
     src/texteditorwindow.h \
     src/searchwindowbase.h \
     src/searchenvswindow.h \
-    src/searchprogramswindow.h
+    src/searchprogramswindow.h \
+    src/searchpackageswindow.h
