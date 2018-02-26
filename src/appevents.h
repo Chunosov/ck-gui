@@ -14,13 +14,13 @@ public:
     static void warning(const QString& msg);
     static void error(const QString& msg);
 
-    static void requestTextEditor(const QString& fileName);
+    static void requestTextEditor(const QString& fileName, const QString& editorTitle);
 
 signals:
     void onInfo(const QString& msg);
     void onError(const QString& msg);
 
-    void textEditorRequested(const QString& fileName);
+    void textEditorRequested(const QString& fileName, const QString& editorTitle);
 
 private:
     AppEvents() {}

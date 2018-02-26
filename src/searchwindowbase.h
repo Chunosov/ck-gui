@@ -51,6 +51,7 @@ protected:
     QString searchText() const;
     QString selectedUid() const;
     QString uidOf(QListWidgetItem* item) const;
+    QListWidgetItem* selectedItem() const;
 
     void cleanResults();
     void addResult(const QString& uid, const QString& text);

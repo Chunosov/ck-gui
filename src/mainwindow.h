@@ -27,7 +27,7 @@ private:
     void openEnvsWindow();
     void openPackagesWindow();
     void openProgramsWindow();
-    void textEditorRequested(const QString& fileName);
+    void textEditorRequested(const QString& fileName, const QString &editorTitle);
     void showSubWindow(QWidget* w);
 };
 

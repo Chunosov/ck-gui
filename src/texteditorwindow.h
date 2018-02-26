@@ -13,7 +13,7 @@ class TextEditorWindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit TextEditorWindow(const QString& fileName, QWidget *parent = nullptr);
+    explicit TextEditorWindow(const QString& fileName, const QString& editorTitle, QWidget *parent = nullptr);
 
 private:
     QString _fileName;

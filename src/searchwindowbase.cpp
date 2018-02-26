@@ -132,15 +132,20 @@ void SearchWindowBase::resultsItemSelected(QListWidgetItem *current, QListWidget
     resultSelected(uid);
 }
 
-QString SearchWindowBase::selectedUid() const
+QListWidgetItem* SearchWindowBase::selectedItem() const
 {
     auto items = _resultsList->selectedItems();
-    return items.isEmpty()? QString() : uidOf(items.first());
+    return items.isEmpty() ? nullptr : items.first();
+}
+
+QString SearchWindowBase::selectedUid() const
+{
+    return uidOf(selectedItem());
 }
 
 QString SearchWindowBase::uidOf(QListWidgetItem* item) const
 {
-    return item->data(Qt::UserRole).toString();
+    return item ? item->data(Qt::UserRole).toString() : QString();
 }
 
 void SearchWindowBase::copyEnvUid() const

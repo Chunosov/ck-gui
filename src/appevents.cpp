@@ -26,7 +26,7 @@ void AppEvents::error(const QString& msg)
     emit instance()->onError(msg);
 }
 
-void AppEvents::requestTextEditor(const QString& fileName)
+void AppEvents::requestTextEditor(const QString& fileName, const QString &editorTitle)
 {
     if (fileName.isEmpty())
     {
@@ -38,5 +38,5 @@ void AppEvents::requestTextEditor(const QString& fileName)
         error(QString("File does not exist: %1").arg(fileName));
         return;
     }
-    emit instance()->textEditorRequested(fileName);
+    emit instance()->textEditorRequested(fileName, editorTitle);
 }

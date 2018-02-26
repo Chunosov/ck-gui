@@ -6,6 +6,7 @@
 #include "orion/helpers/OriDialogs.h"
 
 #include <QMenu>
+#include <QListWidgetItem>
 
 SearchEnvsWindow::SearchEnvsWindow(QWidget *parent) : SearchWindowBase(parent)
 {
@@ -118,12 +119,16 @@ void SearchEnvsWindow::showEnvInfo(const CkEnvInfo& info, const CkEnvMeta& meta)
 
 void SearchEnvsWindow::editEnvScript()
 {
-    AppEvents::requestTextEditor(CK::envScriptPath(selectedUid()));
+    auto item = selectedItem();
+    if (item)
+        AppEvents::requestTextEditor(CK::envScriptPath(uidOf(item)), item->text() + " [Script]");
 }
 
 void SearchEnvsWindow::editMeta()
 {
-    AppEvents::requestTextEditor(CK::envMetaPath(selectedUid()));
+    auto item = selectedItem();
+    if (item)
+        AppEvents::requestTextEditor(CK::envMetaPath(uidOf(item)), item->text() + " [Meta]");
 }
 
 void SearchEnvsWindow::refreshEnv()

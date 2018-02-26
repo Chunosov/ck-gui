@@ -87,9 +87,9 @@ void MainWindow::openProgramsWindow()
     showSubWindow(new SearchProgramsWindow());
 }
 
-void MainWindow::textEditorRequested(const QString& fileName)
+void MainWindow::textEditorRequested(const QString& fileName, const QString& editorTitle)
 {
-    showSubWindow(new TextEditorWindow(fileName));
+    showSubWindow(new TextEditorWindow(fileName, editorTitle));
 }
 
 void MainWindow::showSubWindow(QWidget* w)

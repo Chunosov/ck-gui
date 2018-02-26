@@ -9,9 +9,9 @@
 #include <QPlainTextEdit>
 #include <QPushButton>
 
-TextEditorWindow::TextEditorWindow(const QString &fileName, QWidget *parent) : QWidget(parent)
+TextEditorWindow::TextEditorWindow(const QString &fileName, const QString &editorTitle, QWidget *parent) : QWidget(parent)
 {
-    setWindowTitle("Editor");
+    setWindowTitle(editorTitle.isEmpty() ? "Editor" : editorTitle);
     setWindowIcon(QIcon(":/icon/editor"));
 
     _fileName = fileName;
