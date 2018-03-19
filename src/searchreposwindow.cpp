@@ -5,7 +5,7 @@
 
 SearchReposWindow::SearchReposWindow(QWidget *parent) : SearchWindowBase(parent)
 {
-    setTitleAndIcon("Envs", ":/icon/repos");
+    setTitleAndIcon("Repos", ":/icon/repos");
 
     findAll();
 }

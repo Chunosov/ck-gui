@@ -3,5 +3,6 @@
         <file alias="main">./img/main-icon.svg</file>
         <file alias="envs">./img/gears.svg</file>
         <file alias="editor">./img/pencil.svg</file>
+        <file alias="repos">./img/warehouse.svg</file>
     </qresource>
 </RCC>
