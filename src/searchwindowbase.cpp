@@ -5,49 +5,94 @@
 
 #include <QApplication>
 #include <QClipboard>
+#include <QDesktopServices>
 #include <QLabel>
 #include <QLineEdit>
 #include <QListWidget>
 #include <QMenu>
+#include <QMouseEvent>
 #include <QPushButton>
 #include <QSplitter>
-#include <QTextBrowser>
 
 QString FormatValue::stateStyle()
 {
     static QString normalStyle("color: black");
     static QString errorStyle("color: red");
+    static QString modestStyle("color: gray");
     switch (_state)
     {
     case Normal: return normalStyle;
     case Error: return errorStyle;
+    case Modest: return modestStyle;
     }
     return QString();
 }
 
+FormatValue& FormatValue::withIndent()
+{
+    static QString indent("&nbsp;&nbsp;&nbsp;&nbsp;");
+    _indent += indent;
+    return *this;
+}
+
 QString FormatValue::format()
 {
+    QString nameStr, valueStr;
     if (_isHeader)
     {
-        return QString("<span style='font: 14pt'>%1</span>").arg(_value);
+        nameStr = QString("<span style='font: 14pt'>%1</span>").arg(_value);
     }
+    else
+    {
+        if (!_name.isEmpty())
+            nameStr = QString("<b>%1</b>: ").arg(_name);
 
-    QString nameStr;
-    if (!_name.isEmpty())
-        nameStr = QString("<b>%1</b>: ").arg(_name);
-
-    QString valueStr;
-    if (!_value.isEmpty())
-        valueStr = QString("<span style='%2'>%1</span>").arg(_value, stateStyle());
-
-    return QString("%1%2").arg(nameStr, valueStr);
+        if (!_value.isEmpty())
+        {
+            if (_isHyperlink)
+            {
+                QString href = _hyperlinkTarget.isEmpty() ? _value: _hyperlinkTarget;
+                valueStr = QString("<a href='%2'>%1</a>").arg(_value, href);
+            }
+            else
+                valueStr = QString("<span style='%2'>%1</span>").arg(_value, stateStyle());
+        }
+    }
+    return QString("%1%2%3").arg(_indent, nameStr, valueStr);
 }
+
+//-----------------------------------------------------------------------------
+
+bool InfoView::shouldProcess(QMouseEvent *e)
+{
+    return /*e->modifiers() & Qt::ControlModifier &&*/ e->button() & Qt::LeftButton;
+}
+
+void InfoView::mousePressEvent(QMouseEvent *e)
+{
+    QString href = anchorAt(e->pos());
+    if (!href.isEmpty() && shouldProcess(e))
+        _clickedAnchor = href;
+    else QTextEdit::mousePressEvent(e);
+}
+
+void InfoView::mouseReleaseEvent(QMouseEvent *e)
+{
+    if (!_clickedAnchor.isEmpty() && shouldProcess(e))
+    {
+        QDesktopServices::openUrl(_clickedAnchor);
+        _clickedAnchor.clear();
+    }
+    else QTextEdit::mouseReleaseEvent(e);
+}
+
+//-----------------------------------------------------------------------------
 
 SearchWindowBase::SearchWindowBase(QWidget *parent) : QWidget(parent)
 {
     _searchBox = new QLineEdit;
     _titleResults = Utils::makeTitle("Results:");
-    _infoPanel = new QTextBrowser;
+    _infoPanel = new InfoView;
 
     auto findByTagsButton = new QPushButton("by tags");
     connect(findByTagsButton, &QPushButton::clicked, this, &SearchWindowBase::findByTags);

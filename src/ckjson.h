@@ -62,6 +62,34 @@ public:
 
 //-----------------------------------------------------------------------------
 
+class CkRepoDep : public CkJson
+{
+public:
+    CkRepoDep() {}
+    CkRepoDep(const QJsonObject& json): CkJson(json) {}
+
+    QString uoa() const { return valueStr("repo_uoa"); }
+    QString url() const { return valueStr("repo_url"); }
+};
+
+//-----------------------------------------------------------------------------
+
+class CkRepoMeta : public CkJson
+{
+public:
+    CkRepoMeta(const QString& repoName);
+
+    QString name() const { return valueStr("data_name"); }
+    QString uid() const { return valueStr("data_uid"); }
+    QString url() const { return _dict.valueStr("url"); }
+    QVector<CkRepoDep> deps() const;
+
+public:
+    CkJson _dict;
+};
+
+//-----------------------------------------------------------------------------
+
 class CkInfo : public CkJson
 {
 public:

@@ -2,6 +2,7 @@
 #define SEARCHWINDOWBASE_H
 
 #include <QWidget>
+#include <QTextBrowser>
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -10,16 +11,19 @@ class QLineEdit;
 class QListWidget;
 class QListWidgetItem;
 class QMenu;
-class QTextBrowser;
 QT_END_NAMESPACE
 
 class FormatValue
 {
 public:
-    enum ValueState { Normal, Error };
+    enum ValueState { Normal, Error, Modest };
     FormatValue(const QString& name, const QString& value): _name(name), _value(value){}
+    FormatValue& withIndent();
     FormatValue& withState(ValueState state) { _state = state; return *this; }
     FormatValue& asHeader() { _isHeader = true; return *this; }
+    FormatValue& asHyperlink(const QString& linkTarget = QString()) {
+        _isHyperlink = true, _hyperlinkTarget = linkTarget; return *this;
+    }
     QString format();
 private:
     ValueState _state = Normal;
@@ -27,7 +31,26 @@ private:
     QString _value;
     QString stateStyle();
     bool _isHeader = false;
+    bool _isHyperlink = false;
+    QString _hyperlinkTarget;
+    QString _indent;
 };
+
+//-----------------------------------------------------------------------------
+
+class InfoView : public QTextBrowser
+{
+public:
+    explicit InfoView(QWidget* parent = nullptr) : QTextBrowser(parent) {}
+protected:
+    void mousePressEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+private:
+    bool shouldProcess(QMouseEvent *e);
+    QString _clickedAnchor;
+};
+
+//-----------------------------------------------------------------------------
 
 class SearchWindowBase : public QWidget
 {
@@ -41,7 +64,7 @@ public:
 protected:
     QMenu *_resultsContextMenu;
     QListWidget* _resultsList;
-    QTextBrowser* _infoPanel;
+    InfoView* _infoPanel;
 
     virtual void findByTags();
     virtual void findByUid();

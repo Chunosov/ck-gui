@@ -32,6 +32,9 @@ public:
     QStringList queryPackagesByTags(const QString& tags);
     QStringList queryProgramsByTags(const QString& tags);
 
+    QStringList queryRepos();
+
+    static QString repoPath(const QString& name);
     static QString envPath(const QString& uid);
     static QString envScriptPath(const QString& uid);
     static QString envMetaPath(const QString& uid);

@@ -24,6 +24,7 @@ private:
     void createToolBars();
     void createDocks();
     void onError(const QString& msg);
+    void openReposWindow();
     void openEnvsWindow();
     void openPackagesWindow();
     void openProgramsWindow();

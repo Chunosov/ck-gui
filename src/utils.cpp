@@ -169,4 +169,20 @@ char* makeLocalStr(const QString& s)
     return data;
 }
 
+QString urlTarget(const QString& url)
+{
+    if (url.startsWith("git@"))
+    {
+        int pos = url.indexOf(':');
+        if (pos < 5) return url;
+        QStringRef host(&url, 4, pos-4);
+        int len = url.length()-pos-1;
+        if (url.endsWith(".git")) len -= 4;
+        QStringRef address(&url, pos+1, len);
+        return "https://" % host % "/" % address;
+    }
+    else
+        return url;
+}
+
 } // namespace Utils

@@ -36,6 +36,8 @@ QLabel* makeTitle(const QString &title);
 QString EOL();
 
 char* makeLocalStr(const QString& s);
+
+QString urlTarget(const QString& url);
 }
 
 #endif // UTILS_H

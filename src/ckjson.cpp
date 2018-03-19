@@ -114,3 +114,19 @@ CkEnvInfo::CkEnvInfo(const QString& uid) : CkInfo(CK::envPath(uid))
 {
 }
 
+//-----------------------------------------------------------------------------
+
+CkRepoMeta::CkRepoMeta(const QString& repoName)
+{
+    open(Utils::makePath({CK::repoPath(repoName), ".ckr.json" }));
+    _dict = CkJson(_json["dict"].toObject());
+}
+
+QVector<CkRepoDep> CkRepoMeta::deps() const
+{
+    QVector<CkRepoDep> res;
+    auto json = _dict.json()["repo_deps"].toArray();
+    for (auto it = json.constBegin(); it != json.constEnd(); it++)
+        res.append(CkRepoDep((*it).toObject()));
+    return res;
+}

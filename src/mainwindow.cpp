@@ -2,6 +2,7 @@
 
 #include "appevents.h"
 #include "ck.h"
+#include "searchreposwindow.h"
 #include "searchenvswindow.h"
 #include "searchpackageswindow.h"
 #include "searchprogramswindow.h"
@@ -53,6 +54,7 @@ void MainWindow::createMenu()
     menuBar()->setNativeMenuBar(false);
 
     m = menuBar()->addMenu(tr("&Tool"));
+    m->addAction(tr("Repos"), this, &MainWindow::openReposWindow);
     m->addAction(tr("Envs"), this, &MainWindow::openEnvsWindow);
     m->addAction(tr("Packages"), this, &MainWindow::openPackagesWindow);
     m->addAction(tr("Programs"), this, &MainWindow::openProgramsWindow);
@@ -70,6 +72,11 @@ void MainWindow::createDocks()
 void MainWindow::onError(const QString& msg)
 {
     QMessageBox::critical(this, windowTitle(), msg);
+}
+
+void MainWindow::openReposWindow()
+{
+    showSubWindow(new SearchReposWindow());
 }
 
 void MainWindow::openEnvsWindow()

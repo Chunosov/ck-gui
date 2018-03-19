@@ -122,6 +122,11 @@ QStringList CK::ck(const QStringList& args)
     return lines;
 }
 
+QString CK::repoPath(const QString& name)
+{
+    return Utils::makePath({ AppConfig::ckReposPath(), name });
+}
+
 QString CK::envPath(const QString& uid)
 {
     return Utils::makePath({ AppConfig::ckReposPath(), "local", "env", uid });
@@ -150,4 +155,10 @@ void CK::removeEnv(const QString& uid)
 bool CK::isFileExists(const QString& path)
 {
     return QFile(path).exists();
+}
+
+QStringList CK::queryRepos()
+{
+    QDir repoDir(AppConfig::ckReposPath());
+    return repoDir.entryList(QDir::Dirs | QDir::NoDot | QDir::NoDotDot);
 }
