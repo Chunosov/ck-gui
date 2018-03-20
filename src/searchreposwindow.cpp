@@ -32,7 +32,10 @@ void SearchReposWindow::showRepoInfo(const CkRepoMeta& meta)
                     .asHeader()
                     .format()
 
-        + "<p>" + FormatValue("uid", meta.uid())
+       + "<p>" + FormatValue("uoa", meta.uoa())
+                    .format()
+
+       + "<p>" + FormatValue("uid", meta.uid())
                     .format();
 
     QString url = meta.url();

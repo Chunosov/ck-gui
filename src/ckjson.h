@@ -81,6 +81,7 @@ public:
 
     QString name() const { return valueStr("data_name"); }
     QString uid() const { return valueStr("data_uid"); }
+    QString uoa() const { return valueStr("data_uoa"); }
     QString url() const { return _dict.valueStr("url"); }
     QVector<CkRepoDep> deps() const;
 
