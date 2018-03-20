@@ -11,6 +11,7 @@ class QLineEdit;
 class QListWidget;
 class QListWidgetItem;
 class QMenu;
+class QPushButton;
 QT_END_NAMESPACE
 
 class FormatValue
@@ -57,9 +58,17 @@ class SearchWindowBase : public QWidget
     Q_OBJECT
 
 public:
+    enum Feature {
+        CanSearch = 0x01,
+        CanSearchByTags = 0x02,
+        CanSearchByUid = 0x04,
+    };
+    Q_DECLARE_FLAGS(Features, Feature)
+
     explicit SearchWindowBase(QWidget *parent = nullptr);
 
     void setTitleAndIcon(const QString& title, const char* iconPath);
+    void applyFeatures();
 
 protected:
     QMenu *_resultsContextMenu;
@@ -70,6 +79,7 @@ protected:
     virtual void findByUid();
     virtual void editMeta() {}
     virtual void resultSelected(const QString& uid) { Q_UNUSED(uid); }
+    virtual Features features() const { return Features(); }
 
     QString searchText() const;
     QString selectedUid() const;
@@ -82,8 +92,10 @@ protected:
 
 private:
     QLineEdit* _searchBox;
+    QWidget* _searchPanel;
     QAction *_resultsContextMenuHeader;
     QLabel* _titleResults;
+    QPushButton *_findByTagsButton, *_findByUidButton;
 
     void copyEnvUid() const;
 
@@ -92,5 +104,7 @@ private:
     void resultsContextMenuRequested(const QPoint &pos);
     void resultsItemSelected(QListWidgetItem *current, QListWidgetItem *previous);
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(SearchWindowBase::Features)
 
 #endif // SEARCHWINDOWBASE_H

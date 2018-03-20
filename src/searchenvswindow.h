@@ -18,6 +18,7 @@ protected:
     void findByUid() override;
     void editMeta() override;
     void resultSelected(const QString& uid) override;
+    Features features() const override { return {CanSearch, CanSearchByTags, CanSearchByUid}; }
 
 private:
     enum SearchMode { SEARCH_ALL, SEARCH_TAG, SEARCH_UID };

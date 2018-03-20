@@ -14,6 +14,7 @@ protected:
     void findAll();
     void findByTags() override;
     void resultSelected(const QString& uid) override;
+    Features features() const override { return {CanSearch, CanSearchByTags}; }
 
 private:
     void populate(const QString& tags);

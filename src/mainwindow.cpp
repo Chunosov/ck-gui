@@ -102,6 +102,8 @@ void MainWindow::textEditorRequested(const QString& fileName, const QString& edi
 void MainWindow::showSubWindow(QWidget* w)
 {
     auto subwindow = _mdiArea->addSubWindow(w);
+    auto searchWindow = qobject_cast<SearchWindowBase*>(w);
+    if (searchWindow) searchWindow->applyFeatures();
     subwindow->setWindowIcon(w->windowIcon());
     subwindow->resize(_mdiArea->size() * 0.7);
     subwindow->move(_mdiArea->rect().center() - subwindow->rect().center());

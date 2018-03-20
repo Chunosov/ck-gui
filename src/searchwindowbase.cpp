@@ -5,6 +5,7 @@
 
 #include <QApplication>
 #include <QClipboard>
+#include <QDebug>
 #include <QDesktopServices>
 #include <QLabel>
 #include <QLineEdit>
@@ -94,10 +95,10 @@ SearchWindowBase::SearchWindowBase(QWidget *parent) : QWidget(parent)
     _titleResults = Utils::makeTitle("Results:");
     _infoPanel = new InfoView;
 
-    auto findByTagsButton = new QPushButton("by tags");
-    connect(findByTagsButton, &QPushButton::clicked, this, &SearchWindowBase::findByTags);
-    auto findByUidButton = new QPushButton("by UID");
-    connect(findByUidButton, &QPushButton::clicked, this, &SearchWindowBase::findByUid);
+    _findByTagsButton = new QPushButton("by tags");
+    connect(_findByTagsButton, &QPushButton::clicked, this, &SearchWindowBase::findByTags);
+    _findByUidButton = new QPushButton("by UID");
+    connect(_findByUidButton, &QPushButton::clicked, this, &SearchWindowBase::findByUid);
 
     _resultsList = new QListWidget;
     _resultsList->setAlternatingRowColors(true);
@@ -105,29 +106,35 @@ SearchWindowBase::SearchWindowBase(QWidget *parent) : QWidget(parent)
     connect(_resultsList, &QListWidget::customContextMenuRequested, this, &SearchWindowBase::resultsContextMenuRequested);
     connect(_resultsList, &QListWidget::currentItemChanged, this, &SearchWindowBase::resultsItemSelected);
 
-    auto searchPanel = new QWidget;
-    Ori::Layouts::LayoutV({
-                              Utils::makeTitle("Search:"),
-                              Ori::Layouts::LayoutH({
-                                  _searchBox,
-                                  findByTagsButton,
-                                  findByUidButton,
-                              }).setSpacing(3),
-                              Ori::Layouts::Space(6),
-                              _titleResults,
-                              _resultsList,
-                          })
+    _searchPanel = Ori::Layouts::LayoutV({
+                                             Utils::makeTitle("Search:"),
+                                             Ori::Layouts::LayoutH({
+                                                 _searchBox,
+                                                 _findByTagsButton,
+                                                 _findByUidButton,
+                                             }).setSpacing(3),
+                                             Ori::Layouts::Space(6),
+                                             _titleResults,
+                                         })
             .setMargin(0)
             .setSpacing(0)
-            .useFor(searchPanel);
+            .makeWidget();
+
+    auto listPanel = Ori::Layouts::LayoutV({
+                                               _searchPanel,
+                                               _resultsList,
+                                           })
+            .setMargin(0)
+            .setSpacing(0)
+            .makeWidget();
 
     auto splitter = new QSplitter;
-    splitter->addWidget(searchPanel);
+    splitter->addWidget(listPanel);
     splitter->addWidget(_infoPanel);
     splitter->setStretchFactor(0, 1);
     splitter->setStretchFactor(1, 2);
 
-    Ori::Layouts::LayoutV({splitter})
+    Ori::Layouts::LayoutV({Ori::Layouts::Space(3), splitter})
             .setMargin(0)
             .setSpacing(0)
             .useFor(this);
@@ -230,4 +237,13 @@ void SearchWindowBase::findByTags()
 void SearchWindowBase::findByUid()
 {
     Ori::Dlg::info("Not implemented");
+}
+
+void SearchWindowBase::applyFeatures()
+{
+    auto f = features();
+    qDebug() << f;
+    _searchPanel->setVisible(f & CanSearch);
+    _findByTagsButton->setVisible(f & CanSearchByTags);
+    _findByUidButton->setVisible(f & CanSearchByUid);
 }
