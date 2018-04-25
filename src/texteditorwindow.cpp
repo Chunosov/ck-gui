@@ -4,10 +4,14 @@
 #include "orion/helpers/OriWidgets.h"
 #include "orion/helpers/OriLayouts.h"
 
+#include <QDebug>
+#include <QFileInfo>
 #include <QLabel>
 #include <QLineEdit>
-#include <QPlainTextEdit>
 #include <QPushButton>
+#include <Qsci/qsciscintilla.h>
+#include <Qsci/qscilexerbash.h>
+#include <Qsci/qscilexerjson.h>
 
 TextEditorWindow::TextEditorWindow(const QString &fileName, const QString &editorTitle, QWidget *parent) : QWidget(parent)
 {
@@ -16,6 +20,7 @@ TextEditorWindow::TextEditorWindow(const QString &fileName, const QString &edito
 
     _fileName = fileName;
 
+    // Make title line
     auto fileNameEditor = new QLineEdit;
     auto f = fileNameEditor->font();
     f.setBold(true);
@@ -25,15 +30,29 @@ TextEditorWindow::TextEditorWindow(const QString &fileName, const QString &edito
         .arg(palette().color(QPalette::Window).name()));
     fileNameEditor->setText(_fileName);
 
-    _editor = new QPlainTextEdit;
-    _editor->setWordWrapMode(QTextOption::NoWrap);
+    // Make editor
+    _editor = new QsciScintilla;
+    _editor->setFolding(QsciScintilla::PlainFoldStyle);
     Ori::Gui::setFontMonospace(_editor);
+    QsciLexer *lexer = nullptr;
+    auto ext = QFileInfo(_fileName).suffix();
+    if (ext.compare("json", Qt::CaseInsensitive) == 0)
+        lexer = new QsciLexerJSON(this);
+    else if (ext.compare("sh", Qt::CaseInsensitive) == 0)
+        lexer = new QsciLexerBash(this);
+    if (lexer)
+    {
+        lexer->setFont(_editor->font());
+        _editor->setLexer(lexer);
+    }
 
+    // Make tool buttons
     auto buttonSave = new QPushButton("Save");
     connect(buttonSave, &QPushButton::clicked, this, &TextEditorWindow::save);
     auto buttonReload = new QPushButton("Reload");
     connect(buttonReload, &QPushButton::clicked, this, &TextEditorWindow::reload);
 
+    // Make layout
     Ori::Layouts::LayoutV({
                               Ori::Layouts::LayoutH({
                                   fileNameEditor,
@@ -58,7 +77,7 @@ void TextEditorWindow::reload()
         return AppEvents::error(QString("File not found: %1").arg(_fileName));
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return AppEvents::error(QString("Unable to open file %1: %2").arg(_fileName).arg(file.errorString()));
-    _editor->setPlainText(QString::fromUtf8(file.readAll()));
+    _editor->setText(QString::fromUtf8(file.readAll()));
 }
 
 void TextEditorWindow::save()
@@ -66,7 +85,7 @@ void TextEditorWindow::save()
     QFile file(_fileName);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
         return AppEvents::error(QString("Unable to create file %1: %2").arg(_fileName).arg(file.errorString()));
-    if (file.write(_editor->toPlainText().toUtf8()) == -1)
+    if (file.write(_editor->text().toUtf8()) == -1)
         return AppEvents::error(QString("Failed writing into file %1: %2").arg(_fileName).arg(file.errorString()));
 }
 

@@ -1,12 +1,9 @@
-#ifndef TEXTEDITORWINDOW_H
-#define TEXTEDITORWINDOW_H
+#ifndef TEXT_EDITOR_WINDOW_H
+#define TEXT_EDITOR_WINDOW_H
 
 #include <QWidget>
 
-QT_BEGIN_NAMESPACE
-class QLabel;
-class QPlainTextEdit;
-QT_END_NAMESPACE
+class QsciScintilla;
 
 class TextEditorWindow : public QWidget
 {
@@ -17,10 +14,10 @@ public:
 
 private:
     QString _fileName;
-    QPlainTextEdit* _editor;
+    QsciScintilla* _editor;
 
     void reload();
     void save();
 };
 
-#endif // TEXTEDITORWINDOW_H
+#endif // TEXT_EDITOR_WINDOW_H
