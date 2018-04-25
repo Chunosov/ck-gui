@@ -1,6 +1,6 @@
 #include "texteditorwindow.h"
 
-#include "utils.h"
+#include "appevents.h"
 #include "orion/helpers/OriWidgets.h"
 #include "orion/helpers/OriLayouts.h"
 
@@ -53,11 +53,20 @@ TextEditorWindow::TextEditorWindow(const QString &fileName, const QString &edito
 
 void TextEditorWindow::reload()
 {
-    _editor->setPlainText(QString::fromUtf8(Utils::loadTextFromFile(_fileName)));
+    QFile file(_fileName);
+    if (!file.exists())
+        return AppEvents::error(QString("File not found: %1").arg(_fileName));
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return AppEvents::error(QString("Unable to open file %1: %2").arg(_fileName).arg(file.errorString()));
+    _editor->setPlainText(QString::fromUtf8(file.readAll()));
 }
 
 void TextEditorWindow::save()
 {
-    Utils::saveTextToFile(_fileName, _editor->toPlainText().toUtf8());
+    QFile file(_fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return AppEvents::error(QString("Unable to create file %1: %2").arg(_fileName).arg(file.errorString()));
+    if (file.write(_editor->toPlainText().toUtf8()) == -1)
+        return AppEvents::error(QString("Failed writing into file %1: %2").arg(_fileName).arg(file.errorString()));
 }
 

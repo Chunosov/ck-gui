@@ -1,5 +1,5 @@
 #include "searchwindowbase.h"
-#include "utils.h"
+
 #include "orion/helpers/OriLayouts.h"
 #include "orion/helpers/OriDialogs.h"
 
@@ -92,7 +92,7 @@ void InfoView::mouseReleaseEvent(QMouseEvent *e)
 SearchWindowBase::SearchWindowBase(QWidget *parent) : QWidget(parent)
 {
     _searchBox = new QLineEdit;
-    _titleResults = Utils::makeTitle("Results:");
+    _titleResults = makeTitleLabel("Results:");
     _infoPanel = new InfoView;
 
     _findByTagsButton = new QPushButton("by tags");
@@ -107,7 +107,7 @@ SearchWindowBase::SearchWindowBase(QWidget *parent) : QWidget(parent)
     connect(_resultsList, &QListWidget::currentItemChanged, this, &SearchWindowBase::resultsItemSelected);
 
     _searchPanel = Ori::Layouts::LayoutV({
-                                             Utils::makeTitle("Search:"),
+                                             makeTitleLabel("Search:"),
                                              Ori::Layouts::LayoutH({
                                                  _searchBox,
                                                  _findByTagsButton,
@@ -162,6 +162,15 @@ QAction* SearchWindowBase::makeHeaderItem(QMenu* menu)
     item->setFont(font);
     item->setEnabled(false);
     return item;
+}
+
+QLabel* SearchWindowBase::makeTitleLabel(const QString& title)
+{
+    auto label = new QLabel(title);
+    auto f = label->font();
+    f.setBold(true);
+    label->setFont(f);
+    return label;
 }
 
 void SearchWindowBase::resultsContextMenuRequested(const QPoint &pos)

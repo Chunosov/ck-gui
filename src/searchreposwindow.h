@@ -17,6 +17,8 @@ protected:
 
 private:
     void showRepoInfo(const CkRepoMeta& meta);
+
+    static QString urlTarget(const QString& url);
 };
 
 #endif // SEARCHREPOSWINDOW_H

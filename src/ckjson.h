@@ -20,7 +20,7 @@ public:
 protected:
     QJsonObject _json;
 
-    void open(const QString& fileName);
+    void open(const QString& jsonFile);
     void errorKeyNotFound(const QString& key) const;
     void warnKeyIsEmpty(const QString& key) const;
 

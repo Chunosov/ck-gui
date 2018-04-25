@@ -33,11 +33,8 @@ SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
     src/ck.cpp \
-    src/appconfig.cpp \
     src/appevents.cpp \
     src/ckjson.cpp \
-    src/utils.cpp \
-    src/jsonformat.cpp \
     src/texteditorwindow.cpp \
     src/searchwindowbase.cpp \
     src/searchenvswindow.cpp \
@@ -48,11 +45,8 @@ SOURCES += \
 HEADERS += \
     src/mainwindow.h \
     src/ck.h \
-    src/appconfig.h \
     src/appevents.h \
     src/ckjson.h \
-    src/utils.h \
-    src/jsonformat.h \
     src/texteditorwindow.h \
     src/searchwindowbase.h \
     src/searchenvswindow.h \

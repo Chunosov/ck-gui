@@ -4,6 +4,8 @@
 #include <QProcess>
 #include <QStringList>
 
+//-----------------------------------------------------------------------------
+
 class CkEntry
 {
 public:
@@ -40,11 +42,13 @@ public:
     static QString envMetaPath(const QString& uid);
 
     static bool isFileExists(const QString& path);
+    static QString makePath(const QStringList& parts);
 
 private:
     QProcess _ck;
-    QString _reposPath;
     QStringList _args;
+
+    static QString _reposPath;
 
     QStringList ck(const QStringList &args);
 };

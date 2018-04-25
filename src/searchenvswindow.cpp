@@ -2,7 +2,6 @@
 
 #include "appevents.h"
 #include "ck.h"
-#include "utils.h"
 #include "orion/helpers/OriDialogs.h"
 
 #include <QMenu>
@@ -78,7 +77,7 @@ void SearchEnvsWindow::showEnvInfo(const CkEnvInfo& info, const CkEnvMeta& meta)
 
     auto env_uid = info.backup_data_uid();
     auto full_path = meta.full_path();
-    auto env_script_path = Utils::makePath({ CK::envPath(env_uid), meta.env_script() });
+    auto env_script_path = CK::makePath({ CK::envPath(env_uid), meta.env_script() });
 
     QString s =
         FormatValue("", QString("<b>%1</b> %2").arg(info.data_name(), meta.version()))

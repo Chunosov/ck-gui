@@ -1,25 +1,29 @@
 #include "ckjson.h"
 
+#include "appevents.h"
 #include "ck.h"
-#include "utils.h"
 
 #include <QDebug>
 #include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
 
-void CkJson::open(const QString& file)
+void CkJson::open(const QString& jsonFile)
 {
-    if (!QFile(file).exists())
-    {
-        qWarning() << "File not found:" << file;
-        return;
-    }
-    auto doc = QJsonDocument::fromJson(Utils::loadTextFromFile(file));
+    QFile file(jsonFile);
+    if (!file.exists())
+        return AppEvents::error(QString("File not found: %1").arg(jsonFile));
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return AppEvents::error(QString("Unable to open file %1: %2").arg(jsonFile, file.errorString()));
+
+    QJsonParseError status;
+    auto doc = QJsonDocument::fromJson(file.readAll(), &status);
+    if (status.error != QJsonParseError::NoError)
+        return AppEvents::error(QString("Invalid CK-json file %1: %2").arg(jsonFile, status.errorString()));
     _json = doc.object();
     if (_json.isEmpty())
     {
-        qWarning() << "Invalid CK-json file:" << file;
+        qWarning() << "Empty CK-json file:" << jsonFile;
         return;
     }
     _ok = true;
@@ -105,7 +109,7 @@ QVector<CkEnvDep> CkEnvMeta::deps() const
 
 CkInfo::CkInfo(const QString& path)
 {
-    open(Utils::makePath({path, ".cm", "info.json" }));
+    open(CK::makePath({path, ".cm", "info.json" }));
 }
 
 //-----------------------------------------------------------------------------
@@ -118,7 +122,7 @@ CkEnvInfo::CkEnvInfo(const QString& uid) : CkInfo(CK::envPath(uid))
 
 CkRepoMeta::CkRepoMeta(const QString& repoName)
 {
-    open(Utils::makePath({CK::repoPath(repoName), ".ckr.json" }));
+    open(CK::makePath({CK::repoPath(repoName), ".ckr.json" }));
     _dict = CkJson(_json["dict"].toObject());
 }
 

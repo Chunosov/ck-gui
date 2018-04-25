@@ -99,7 +99,8 @@ private:
 
     void copyEnvUid() const;
 
-    QAction* makeHeaderItem(QMenu* menu);
+    static QAction* makeHeaderItem(QMenu* menu);
+    static QLabel* makeTitleLabel(const QString& title);
 
     void resultsContextMenuRequested(const QPoint &pos);
     void resultsItemSelected(QListWidgetItem *current, QListWidgetItem *previous);

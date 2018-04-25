@@ -1,3 +1,2 @@
 *.user
-bin/ck-gui
-bin/app.conf
+bin/ck-gui*

@@ -1,13 +1,14 @@
 #include "ck.h"
 
 #include "appevents.h"
-#include "appconfig.h"
 #include "ckjson.h"
-#include "utils.h"
+#include "orion/tools/OriSettings.h"
 
 #include <QFile>
 #include <QDebug>
 #include <QDir>
+
+QString CK::_reposPath;
 
 CK& CK::instance()
 {
@@ -17,25 +18,47 @@ CK& CK::instance()
 
 CK::CK()
 {
-    _reposPath = AppConfig::ckReposPath();
-    if (_reposPath.isEmpty())
-        AppEvents::error("CK repository path not found in config");
+    Ori::Settings settings;
+    settings.beginDefaultGroup();
 
-    auto ckDir = AppConfig::ckBinPath();
-    if (ckDir.isEmpty())
-        AppEvents::error("CK exe name not found in config");
+    _reposPath = settings.strValue("ckReposPath");
+    if (_reposPath.isEmpty())
+    {
+        AppEvents::error("CK repository path not found in config");
+        return;
+    }
+
+    QString ckExe;
+
+#ifdef Q_OS_LINUX
+    if (settings.value("ckInSystemPath").toBool())
+    {
+        ckExe = "ck";
+    }
+    else
+#endif
+    {
+        auto ckDir = settings.strValue("ckBinPath");
+        if (ckDir.isEmpty())
+        {
+            AppEvents::error("CK exe name not found in config");
+            return;
+        }
+        _ck.setWorkingDirectory(ckDir);
 
 #ifdef Q_OS_WIN32
-    _ck.setProgram("python");
-    _args = QStringList { "-W", "ignore::DeprecationWarning", ckDir + "\\..\\ck\\kernel.py" };
+        ckExe = "python";
+        _args = QStringList { "-W", "ignore::DeprecationWarning", "..\\ck\\kernel.py" };
 #else
-    auto ckExe = AppConfig::ckExeName();
-    if (ckExe.isEmpty())
-        AppEvents::error("CK bin path not found in config");
-
-    _ck.setProgram(ckExe);
-    _ck.setWorkingDirectory(ckDir);
+        ckExe = settings.strValue("ckExeName");
+        if (ckExe.isEmpty())
+        {
+            AppEvents::error("CK bin path not found in config");
+            return;
+        }
 #endif
+    }
+    _ck.setProgram(ckExe);
 
     qDebug() << "CK repos path:" << _reposPath;
     qDebug() << "CK bin path:" << _ck.workingDirectory();
@@ -89,6 +112,14 @@ QStringList CK::queryProgramsByTags(const QString& tags)
 
 QStringList CK::ck(const QStringList& args)
 {
+#if defined(Q_OS_WIN)
+    static QString EOL("\r\n");
+#elif defined(Q_OS_MAC)
+    static QString EOL("\r");
+#else
+    static QString EOL("\n");
+#endif
+
     static QString errorMarker("CK error:");
 
 #ifdef Q_OS_WIN32
@@ -112,7 +143,7 @@ QStringList CK::ck(const QStringList& args)
             .arg(_ck.workingDirectory()).arg(_ck.program()).arg(error).arg(errors));
         return QStringList();
     }
-    auto lines = output.split(Utils::EOL(), QString::SkipEmptyParts);
+    auto lines = output.split(EOL, QString::SkipEmptyParts);
     for (const QString& line: lines)
         if (line.startsWith(errorMarker))
         {
@@ -124,22 +155,22 @@ QStringList CK::ck(const QStringList& args)
 
 QString CK::repoPath(const QString& name)
 {
-    return Utils::makePath({ AppConfig::ckReposPath(), name });
+    return makePath({ _reposPath, name });
 }
 
 QString CK::envPath(const QString& uid)
 {
-    return Utils::makePath({ AppConfig::ckReposPath(), "local", "env", uid });
+    return makePath({ _reposPath, "local", "env", uid });
 }
 
 QString CK::envScriptPath(const QString& uid)
 {
-    return Utils::makePath({ envPath(uid), "env.sh" });
+    return makePath({ envPath(uid), "env.sh" });
 }
 
 QString CK::envMetaPath(const QString& uid)
 {
-    return Utils::makePath({ envPath(uid), ".cm", "meta.json" });
+    return makePath({ envPath(uid), ".cm", "meta.json" });
 }
 
 void CK::refreshEnv(const QString& uid)
@@ -157,8 +188,13 @@ bool CK::isFileExists(const QString& path)
     return QFile(path).exists();
 }
 
+QString CK::makePath(const QStringList& parts)
+{
+    return parts.join(QDir::separator());
+}
+
 QStringList CK::queryRepos()
 {
-    QDir repoDir(AppConfig::ckReposPath());
+    QDir repoDir(_reposPath);
     return repoDir.entryList(QDir::Dirs | QDir::NoDot | QDir::NoDotDot);
 }
