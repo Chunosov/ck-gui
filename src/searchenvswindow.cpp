@@ -95,6 +95,9 @@ void SearchEnvsWindow::showEnvInfo(const CkEnvInfo& info, const CkEnvMeta& meta)
                     .withState(CK::isFileExists(full_path) ? FormatValue::Normal : FormatValue::Error)
                     .format()
 
+        + "<p>" + FormatValue("package", QString("%1 <span style='color: gray'>(%2)</span>").arg(meta.packageUoa(), meta.packageUid()))
+                    .format()
+
         + "<p>" + FormatValue("tags", meta.tags().join(", "))
                     .format()
             ;

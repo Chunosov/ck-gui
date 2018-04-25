@@ -1,32 +1,40 @@
 #include "searchpackageswindow.h"
 
+#include "appevents.h"
 #include "ck.h"
+
+#include <QListWidgetItem>
 
 SearchPackagesWindow::SearchPackagesWindow(QWidget *parent) : SearchWindowBase(parent)
 {
     setTitleAndIcon("Packages", ":/icon/packages");
-
-    findAll();
 }
 
-void SearchPackagesWindow::populate(const QString& tags)
+void SearchPackagesWindow::populate(const QStringList& searchResults)
 {
     cleanResults();
-    for (const QString& name : CK::instance().queryPackagesByTags(tags))
+    for (const QString& name : searchResults)
     {
         QStringList parts = name.split(':');
         addResult(name, parts.last());
     }
 }
 
-void SearchPackagesWindow::findAll()
-{
-    populate("");
-}
-
 void SearchPackagesWindow::findByTags()
 {
-    populate(searchText());
+    populate(CK::instance().queryPackagesByTags(searchText()));
+}
+
+void SearchPackagesWindow::findByName()
+{
+    populate(CK::instance().queryPackagesByName(searchText()));
+}
+
+void SearchPackagesWindow::editMeta()
+{
+    auto item = selectedItem();
+    if (item)
+        AppEvents::requestTextEditor(CK::packageMetaPath(uidOf(item)), item->text() + " [Meta]");
 }
 
 void SearchPackagesWindow::resultSelected(const QString& uid)
@@ -39,13 +47,17 @@ void SearchPackagesWindow::showInfo(const QString& uid)
     auto parts = uid.split(':');
     auto name = parts.last();
     auto repo = parts.first();
+    auto full_path = CK::packagePath(uid);
 
     QString s =
         FormatValue("", QString("<b>%1</b>").arg(name))
                     .asHeader()
                     .format()
             + "<p>" + FormatValue("repo", repo)
-                        .format();
+                       .format()
+            + "<p>" + FormatValue("path", full_path)
+                       .withState(CK::isFileExists(full_path) ? FormatValue::Normal : FormatValue::Error)
+                       .format();
 
     showHtmlInfo(s);
 }

@@ -99,6 +99,8 @@ SearchWindowBase::SearchWindowBase(QWidget *parent) : QWidget(parent)
     connect(_findByTagsButton, &QPushButton::clicked, this, &SearchWindowBase::findByTags);
     _findByUidButton = new QPushButton("by UID");
     connect(_findByUidButton, &QPushButton::clicked, this, &SearchWindowBase::findByUid);
+    _findByNameButton = new QPushButton("by name");
+    connect(_findByNameButton, &QPushButton::clicked, this, &SearchWindowBase::findByName);
 
     _resultsList = new QListWidget;
     _resultsList->setAlternatingRowColors(true);
@@ -112,6 +114,7 @@ SearchWindowBase::SearchWindowBase(QWidget *parent) : QWidget(parent)
                                                  _searchBox,
                                                  _findByTagsButton,
                                                  _findByUidButton,
+                                                 _findByNameButton,
                                              }).setSpacing(3),
                                              Ori::Layouts::Space(6),
                                              _titleResults,
@@ -248,6 +251,11 @@ void SearchWindowBase::findByUid()
     Ori::Dlg::info("Not implemented");
 }
 
+void SearchWindowBase::findByName()
+{
+    Ori::Dlg::info("Not implemented");
+}
+
 void SearchWindowBase::applyFeatures()
 {
     auto f = features();
@@ -255,4 +263,5 @@ void SearchWindowBase::applyFeatures()
     _searchPanel->setVisible(f & CanSearch);
     _findByTagsButton->setVisible(f & CanSearchByTags);
     _findByUidButton->setVisible(f & CanSearchByUid);
+    _findByNameButton->setVisible(f & CanSearchByName);
 }

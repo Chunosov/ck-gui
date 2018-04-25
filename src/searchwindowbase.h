@@ -62,6 +62,7 @@ public:
         CanSearch = 0x01,
         CanSearchByTags = 0x02,
         CanSearchByUid = 0x04,
+        CanSearchByName = 0x08,
     };
     Q_DECLARE_FLAGS(Features, Feature)
 
@@ -77,6 +78,7 @@ protected:
 
     virtual void findByTags();
     virtual void findByUid();
+    virtual void findByName();
     virtual void editMeta() {}
     virtual void resultSelected(const QString& uid) { Q_UNUSED(uid); }
     virtual Features features() const { return Features(); }
@@ -95,7 +97,7 @@ private:
     QWidget* _searchPanel;
     QAction *_resultsContextMenuHeader;
     QLabel* _titleResults;
-    QPushButton *_findByTagsButton, *_findByUidButton;
+    QPushButton *_findByTagsButton, *_findByUidButton, *_findByNameButton;
 
     void copyEnvUid() const;
 

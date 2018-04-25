@@ -1,5 +1,5 @@
-#ifndef SEARCHPACKAGESWINDOW_H
-#define SEARCHPACKAGESWINDOW_H
+#ifndef SEARCH_PACKAGES_WINDOW_H
+#define SEARCH_PACKAGES_WINDOW_H
 
 #include "searchwindowbase.h"
 
@@ -11,14 +11,15 @@ public:
     explicit SearchPackagesWindow(QWidget *parent = nullptr);
 
 protected:
-    void findAll();
     void findByTags() override;
+    void findByName() override;
+    void editMeta() override;
     void resultSelected(const QString& uid) override;
-    Features features() const override { return {CanSearch, CanSearchByTags}; }
+    Features features() const override { return {CanSearch, CanSearchByTags, CanSearchByName}; }
 
 private:
-    void populate(const QString& tags);
+    void populate(const QStringList &searchResults);
     void showInfo(const QString& uid);
 };
 
-#endif // SEARCHPACKAGESWINDOW_H
+#endif // SEARCH_PACKAGES_WINDOW_H

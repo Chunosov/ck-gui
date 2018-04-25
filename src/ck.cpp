@@ -105,6 +105,11 @@ QStringList CK::queryPackagesByTags(const QString& tags)
     return ck({ "search", "package", "--tags="+tags });
 }
 
+QStringList CK::queryPackagesByName(const QString& name)
+{
+    return ck({ "search", "package:" + name });
+}
+
 QStringList CK::queryProgramsByTags(const QString& tags)
 {
     return ck({ "search", "program", "--tags="+tags });
@@ -158,6 +163,11 @@ QString CK::repoPath(const QString& name)
     return makePath({ _reposPath, name });
 }
 
+QString CK::metaPath(const QString& entityPath)
+{
+    return makePath({ entityPath, ".cm", "meta.json" });
+}
+
 QString CK::envPath(const QString& uid)
 {
     return makePath({ _reposPath, "local", "env", uid });
@@ -170,7 +180,19 @@ QString CK::envScriptPath(const QString& uid)
 
 QString CK::envMetaPath(const QString& uid)
 {
-    return makePath({ envPath(uid), ".cm", "meta.json" });
+    return metaPath(envPath(uid));
+}
+
+QString CK::packagePath(const QString& name)
+{
+    QStringList parts = name.split(':');
+    parts.insert(0, _reposPath);
+    return makePath(parts);
+}
+
+QString CK::packageMetaPath(const QString& name)
+{
+    return metaPath(packagePath(name));
 }
 
 void CK::refreshEnv(const QString& uid)

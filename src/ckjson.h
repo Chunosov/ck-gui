@@ -57,6 +57,8 @@ public:
     QString full_path() const { return valueStr({"customize", "full_path"}); }
     QString version() const { return valueStr({"customize", "version"}); }
     QString env_script() const { return valueStr("env_script"); }
+    QString packageUid() const { return valueStr({"customize", "used_package_uid"}); }
+    QString packageUoa() const { return valueStr({"customize", "used_package_uoa"}); }
     QVector<CkEnvDep> deps() const;
 };
 
