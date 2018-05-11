@@ -2,6 +2,18 @@
 
 Simple draft of UI for [ck](https://github.com/ctuning/ck).
 
+## What does it do?
+
+This is just a thin wrapper for `ck` command line interface representing several typical scenarios as windows.
+
+Currently there are several search scenarios:
+- **Tool > Repos** - shows list of all repositoies and some of their properties.
+- **Tool > Envs** - wrapper for `ck search env` command, shows list of found envs and some of their properties. Allows refreshing and deletion env via context menu.
+- **Tool > Packages** - wrapper for `ck search package` command, shows list of found packages and some of their properties.
+- **Tool > Programs** - wrapper for `ck search program` command, shows list of found programs and some of their properties.
+
+For most of entities commands for displaying/editing meta (and script for env) are also available (but be careful about the [issue](https://github.com/Chunosov/ck-gui/issues/1) with scintilla editor).
+
 ![Common screen](img/screenshots/screen-000.png) 
 
 ## Prebuilds
