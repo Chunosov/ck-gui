@@ -8,11 +8,13 @@
 #include "searchprogramswindow.h"
 #include "texteditorwindow.h"
 #include "orion/widgets/OriMdiToolBar.h"
+#include "orion/tools/OriSettings.h"
 
 #include <QApplication>
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QDockWidget>
+#include <QFileDialog>
 #include <QMdiArea>
 #include <QMdiSubWindow>
 #include <QMenuBar>
@@ -40,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     move(desktop.center() - rect().center());
 
     // open first tool window
-    QTimer::singleShot(100, this, &MainWindow::openEnvsWindow);
+    QTimer::singleShot(100, this, &MainWindow::runFirstCommand);
 }
 
 MainWindow::~MainWindow()
@@ -108,4 +110,31 @@ void MainWindow::showSubWindow(QWidget* w)
     subwindow->resize(_mdiArea->size() * 0.7);
     subwindow->move(_mdiArea->rect().center() - subwindow->rect().center());
     subwindow->show();
+}
+
+void MainWindow::runFirstCommand()
+{
+    // Check config before first run
+    if (!checkConfigSettings())
+    {
+        close();
+        return;
+    }
+
+    openEnvsWindow();
+}
+
+bool MainWindow::checkConfigSettings()
+{
+    Ori::Settings settings;
+    settings.beginDefaultGroup();
+    // Shold be enough wneh ck is installed via pip and is in PATH
+    auto reposPath = settings.strValue("ckReposPath");
+    if (reposPath.isEmpty())
+    {
+        QString reposPath = QFileDialog::getExistingDirectory(this, "Select root forlder of ck-repositories");
+        if (reposPath.isEmpty()) return false;
+        settings.setValue("ckReposPath", reposPath);
+    }
+    return true;
 }

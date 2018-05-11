@@ -30,6 +30,8 @@ private:
     void openProgramsWindow();
     void textEditorRequested(const QString& fileName, const QString &editorTitle);
     void showSubWindow(QWidget* w);
+    void runFirstCommand();
+    bool checkConfigSettings();
 };
 
 #endif // MAINWINDOW_H

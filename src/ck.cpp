@@ -31,7 +31,7 @@ CK::CK()
     QString ckExe;
 
 #ifdef Q_OS_LINUX
-    if (settings.value("ckInSystemPath").toBool())
+    if (settings.value("ckInSystemPath", true).toBool())
     {
         ckExe = "ck";
     }
