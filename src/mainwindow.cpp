@@ -19,6 +19,7 @@
 #include <QMdiSubWindow>
 #include <QMenuBar>
 #include <QMessageBox>
+#include <QStandardPaths>
 #include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
@@ -128,13 +129,20 @@ bool MainWindow::checkConfigSettings()
 {
     Ori::Settings settings;
     settings.beginDefaultGroup();
-    // Shold be enough wneh ck is installed via pip and is in PATH
+    // Should be enough wneh ck is installed via pip and is in PATH
     auto reposPath = settings.strValue("ckReposPath");
     if (reposPath.isEmpty())
     {
-        QString reposPath = QFileDialog::getExistingDirectory(this, "Select root forlder of ck-repositories");
-        if (reposPath.isEmpty()) return false;
-        settings.setValue("ckReposPath", reposPath);
+        // Try to find in HOME dir at first
+        reposPath = QStandardPaths::locate(QStandardPaths::HomeLocation, "CK", QStandardPaths::LocateDirectory);
+        if (reposPath.isEmpty())
+        {
+            // Ask user if repos are in non-standard location
+            QString reposPath = QFileDialog::getExistingDirectory(this, "Select root forlder of ck-repositories");
+            if (reposPath.isEmpty()) return false;
+        }
+        if (!reposPath.isEmpty())
+            settings.setValue("ckReposPath", reposPath);
     }
     return true;
 }
