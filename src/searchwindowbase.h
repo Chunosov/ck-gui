@@ -53,6 +53,14 @@ private:
 
 //-----------------------------------------------------------------------------
 
+struct SearchResult {
+    QString id;
+    QString title;
+};
+using SearchResults = QVector<SearchResult>;
+
+//-----------------------------------------------------------------------------
+
 class SearchWindowBase : public QWidget
 {
     Q_OBJECT
@@ -88,8 +96,7 @@ protected:
     QString uidOf(QListWidgetItem* item) const;
     QListWidgetItem* selectedItem() const;
 
-    void cleanResults();
-    void addResult(const QString& uid, const QString& text);
+    void setResults(SearchResults&& r);
     void showHtmlInfo(const QString& html);
 
 private:

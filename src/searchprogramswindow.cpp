@@ -11,12 +11,13 @@ SearchProgramsWindow::SearchProgramsWindow(QWidget *parent) : SearchWindowBase(p
 
 void SearchProgramsWindow::populate(const QString& tags)
 {
-    cleanResults();
+    SearchResults results;
     for (const QString& name : CK::instance().queryProgramsByTags(tags))
     {
         QStringList parts = name.split(':');
-        addResult(name, parts.last());
+        results.append({name, parts.last()});
     }
+    setResults(std::move(results));
 }
 
 void SearchProgramsWindow::findAll()

@@ -222,20 +222,6 @@ QString SearchWindowBase::searchText() const
     return _searchBox->text().trimmed();
 }
 
-void SearchWindowBase::cleanResults()
-{
-    _resultsList->clear();
-}
-
-void SearchWindowBase::addResult(const QString& uid, const QString& text)
-{
-    auto item = new QListWidgetItem(_resultsList);
-    item->setText(text);
-    item->setToolTip(uid);
-    item->setData(Qt::UserRole, uid);
-    _resultsList->addItem(item);
-}
-
 void SearchWindowBase::showHtmlInfo(const QString& html)
 {
     _infoPanel->setHtml(html);
@@ -259,9 +245,27 @@ void SearchWindowBase::findByName()
 void SearchWindowBase::applyFeatures()
 {
     auto f = features();
-    qDebug() << f;
     _searchPanel->setVisible(f & CanSearch);
     _findByTagsButton->setVisible(f & CanSearchByTags);
     _findByUidButton->setVisible(f & CanSearchByUid);
     _findByNameButton->setVisible(f & CanSearchByName);
+}
+
+void SearchWindowBase::setResults(SearchResults &&r)
+{
+    // Move results into local container and sort them by title
+    SearchResults results(r);
+    std::sort(results.begin(), results.end(),
+        [](auto a, auto b){ return a.title < b.title; });
+
+    _resultsList->clear();
+    for (auto &result : results)
+    {
+        auto item = new QListWidgetItem(_resultsList);
+        item->setText(result.title);
+        item->setToolTip(result.id);
+        item->setData(Qt::UserRole, result.id);
+        _resultsList->addItem(item);
+    }
+    _titleResults->setText(QString("Results (%1):").arg(results.size()));
 }

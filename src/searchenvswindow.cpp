@@ -21,15 +21,16 @@ SearchEnvsWindow::SearchEnvsWindow(QWidget *parent) : SearchWindowBase(parent)
 
 void SearchEnvsWindow::populateEnvs(const QString& tags, const QString& uid)
 {
-    cleanResults();
+    SearchResults results;
     for (const CkEntry& env : CK::instance().queryEnvsByTags(tags))
     {
         if (!uid.isEmpty())
         {
             if (!env.uid.contains(uid)) continue;
         }
-        addResult(env.uid, env.name);
+        results.append({env.uid, env.name});
     }
+    setResults(std::move(results));
 }
 
 void SearchEnvsWindow::findAll()

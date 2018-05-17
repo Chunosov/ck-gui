@@ -11,9 +11,10 @@ SearchReposWindow::SearchReposWindow(QWidget *parent) : SearchWindowBase(parent)
 
 void SearchReposWindow::findAll()
 {
-    cleanResults();
+    SearchResults results;
     for (const QString& name : CK::instance().queryRepos())
-        addResult(name, name);
+        results.append({name, name});
+    setResults(std::move(results));
 }
 
 void SearchReposWindow::resultSelected(const QString& name)

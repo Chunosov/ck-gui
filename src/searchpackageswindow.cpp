@@ -12,12 +12,13 @@ SearchPackagesWindow::SearchPackagesWindow(QWidget *parent) : SearchWindowBase(p
 
 void SearchPackagesWindow::populate(const QStringList& searchResults)
 {
-    cleanResults();
+    SearchResults results;
     for (const QString& name : searchResults)
     {
         QStringList parts = name.split(':');
-        addResult(name, parts.last());
+        results.append({name, parts.last()});
     }
+    setResults(std::move(results));
 }
 
 void SearchPackagesWindow::findByTags()

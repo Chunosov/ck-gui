@@ -111,7 +111,9 @@ if [[ "${DO_APPIMAGE}" == "true" ]]; then
   # Run linuxdeplyqt on the AppDir
   echo
   echo "Creating AppImage..."
-  ./${LINUXDEPLOYQT} AppDir/usr/share/applications/ck-gui.desktop -appimage -no-translations
+  # For some reason the tool forgets about these plugins:
+  SVG_PLUGINS=iconengines/libqsvgicon.so,imageformats/libqsvg.so
+  ./${LINUXDEPLOYQT} AppDir/usr/share/applications/ck-gui.desktop -appimage -no-translations -extra-plugins=${SVG_PLUGINS}
   exit_if_error
 
   echo
