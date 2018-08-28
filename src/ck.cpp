@@ -78,6 +78,11 @@ QList<CkEntry> CK::queryEnvsByTags(const QString& tags)
     {
         // result = "local:env:fff6cd1bb4dc78f2"
         auto uid = result.section(':', -1);
+
+        // `ck search env` returns `ck-env:env:python_simport`, but there is not such env
+        if (!CkEnvInfo::isValid(uid))
+            continue;
+
         auto entry = queryEnvByUid(uid);
         if (!entry.isEmpty())
             entries << entry;

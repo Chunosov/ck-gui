@@ -4,7 +4,6 @@
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-class QDockWidget;
 class QMdiArea;
 QT_END_NAMESPACE
 
@@ -13,16 +12,13 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    MainWindow(QWidget *parent = nullptr);
 
 private:
     QMdiArea* _mdiArea;
-    QDockWidget *_dockEnvList;
 
     void createMenu();
     void createToolBars();
-    void createDocks();
     void onError(const QString& msg);
     void openReposWindow();
     void openEnvsWindow();
