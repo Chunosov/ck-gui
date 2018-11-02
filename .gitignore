@@ -1,4 +1,5 @@
+*.pyc
 *.user
-bin/ck-gui*
-out
-tmp
+*tmp/
+*out/
+program/ck-gui-qt/bin/ck-gui*

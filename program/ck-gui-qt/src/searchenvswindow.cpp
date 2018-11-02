@@ -2,7 +2,7 @@
 
 #include "appevents.h"
 #include "ck.h"
-#include "orion/helpers/OriDialogs.h"
+#include "helpers/OriDialogs.h"
 
 #include <QMenu>
 #include <QListWidgetItem>

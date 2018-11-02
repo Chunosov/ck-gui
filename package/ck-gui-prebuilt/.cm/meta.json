@@ -1,0 +1,34 @@
+{
+  "customize": {
+    "install_env": {
+      "PACKAGE_WGET": "YES",
+      "PACKAGE_SKIP_LINUX_MAKE": "YES",
+      "PACKAGE_SKIP_CLEAN_OBJ": "YES",
+      "PACKAGE_SKIP_CLEAN_PACKAGE": "YES",
+      "PACKAGE_NAME": "ck-gui-x86_64.AppImage",
+      "PACKAGE_URL": "https://www.dropbox.com/s/261bieepeptkmrd"
+    },
+    "version": "0.1"
+  },
+  "end_full_path": {
+    "linux": "ck-gui-x86_64.AppImage"
+  },
+  "only_for_host_os_tags": [
+    "linux"
+  ],
+  "only_for_target_os_tags": [
+    "linux"
+  ],
+  "soft_uoa": "f29450aa13250654", 
+  "suggested_path": "tool-ck-gui-prebuilt",
+  "process_script": "install",
+  "use_scripts_from_another_entry": {
+    "data_uoa": "cd9ccc74060b3d18",
+    "module_uoa": "script"
+  },
+  "tags": [
+    "tool", 
+    "ck-gui",
+    "vprebuilt"
+  ]
+}

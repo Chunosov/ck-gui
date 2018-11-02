@@ -1,0 +1,56 @@
+{
+  "backup_data_uid": "1180a0d658943cd8",
+  "data_name": "ck-gui-qt",
+  "use_compile_script": "yes",
+  "compile_cmds": {
+    "default": {
+      "cmd": "../ck-compile$#script_ext#$"
+    }
+  },
+  "compile_deps": {
+    "compiler": {
+      "local": "yes",
+      "name": "C++ compiler",
+      "sort": 0,
+      "tags": "compiler,lang-cpp"
+    },
+    "lib-qt": {
+      "local": "yes",
+      "name": "Qt library",
+      "sort": 1,
+      "tags": "lib,qt"
+    },
+    "lib-orion-qt": {
+      "local": "yes",
+      "name": "orion-qt library",
+      "sort": 2,
+      "tags": "lib,orion-qt"
+    }
+  },
+  "run_deps": {
+    "lib-qt": {
+      "local": "yes",
+      "name": "Qt library",
+      "sort": 1,
+      "tags": "lib,qt"
+    }
+  },
+  "compiler_env": "CK_CXX",
+  "process_in_tmp": "yes", 
+  "program": "yes",
+  "target_file": "ck-gui",
+  "skip_bin_ext": "yes",
+  "run_cmds": {
+    "default": {
+      "run_time": {
+        "run_cmd_main": "$#BIN_FILE#$"
+      }
+    }
+  }, 
+  "run_vars": {
+  },
+  "tags": [
+    "ck-gui",
+    "vqt"
+  ]
+}

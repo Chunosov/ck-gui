@@ -1,7 +1,7 @@
 #include "searchwindowbase.h"
 
-#include "orion/helpers/OriLayouts.h"
-#include "orion/helpers/OriDialogs.h"
+#include "helpers/OriLayouts.h"
+#include "helpers/OriDialogs.h"
 
 #include <QApplication>
 #include <QClipboard>

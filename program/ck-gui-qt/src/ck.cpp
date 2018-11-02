@@ -2,7 +2,7 @@
 
 #include "appevents.h"
 #include "ckjson.h"
-#include "orion/tools/OriSettings.h"
+#include "tools/OriSettings.h"
 
 #include <QFile>
 #include <QDebug>

@@ -7,8 +7,8 @@
 #include "searchpackageswindow.h"
 #include "searchprogramswindow.h"
 #include "texteditorwindow.h"
-#include "orion/widgets/OriMdiToolBar.h"
-#include "orion/tools/OriSettings.h"
+#include "widgets/OriMdiToolBar.h"
+#include "tools/OriSettings.h"
 
 #include <QApplication>
 #include <QDebug>

@@ -1,0 +1,8 @@
+{
+  "actions": {
+    "run": {
+      "desc": "Run ck-gui program"
+    }
+  }, 
+  "desc": "ck-gui commands"
+}

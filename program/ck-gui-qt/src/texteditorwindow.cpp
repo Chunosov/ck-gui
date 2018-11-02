@@ -1,8 +1,8 @@
 #include "texteditorwindow.h"
 
 #include "appevents.h"
-#include "orion/helpers/OriWidgets.h"
-#include "orion/helpers/OriLayouts.h"
+#include "helpers/OriWidgets.h"
+#include "helpers/OriLayouts.h"
 
 #include <QDebug>
 #include <QFileInfo>

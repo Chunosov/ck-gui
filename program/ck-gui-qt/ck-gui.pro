@@ -7,12 +7,19 @@
 QT += core gui widgets svg
 CONFIG += qscintilla2
 
+ORION_INCLUDE = $$(ORION_QT_PATH)/orion.pri
+
+!exists($$ORION_INCLUDE) {
+  error(Path to orion-qt library is not set or incorrect. \
+    Download library from https://github.com/orion-project/orion-qt \
+    and provide path to it via environment variable ORION_QT_PATH)
+}
+
 TARGET = ck-gui
 TEMPLATE = app
 DESTDIR = $$_PRO_FILE_PWD_/bin
 
-ORION = $$_PRO_FILE_PWD_/orion/
-include($$ORION"orion.pri")
+include($$ORION_INCLUDE)
 
 CONFIG += c++14
 
