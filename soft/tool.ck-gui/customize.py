@@ -46,8 +46,7 @@ def setup(i):
 
   env_prefix = cus['env_prefix']
   full_path = cus['full_path']
-  install_dir = os.path.dirname(full_path)
 
-  env[env_prefix] = install_dir
+  env[env_prefix] = full_path
 
   return {'return': 0, 'bat': ''}
