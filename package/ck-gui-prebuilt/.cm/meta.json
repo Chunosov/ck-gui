@@ -1,18 +1,17 @@
 {
   "customize": {
     "install_env": {
-      "PACKAGE_GIT": "YES",
-      "PACKAGE_GIT_CHECKOUT": "v0.1",
-      "PACKAGE_SUB_DIR": "src",
+      "PACKAGE_WGET": "YES",
       "PACKAGE_SKIP_LINUX_MAKE": "YES",
       "PACKAGE_SKIP_CLEAN_OBJ": "YES",
-      "PACKAGE_URL": "https://github.com/orion-project/orion-qt"
+      "PACKAGE_SKIP_CLEAN_PACKAGE": "YES",
+      "PACKAGE_NAME": "ck-gui-x86_64.AppImage",
+      "PACKAGE_URL": "https://www.dropbox.com/s/261bieepeptkmrd"
     },
     "version": "0.1"
   },
   "end_full_path": {
-    "linux": "src/orion.pri", 
-    "win": "src/orion.pri"
+    "linux": "ck-gui-x86_64.AppImage"
   },
   "only_for_host_os_tags": [
     "linux"
@@ -20,20 +19,16 @@
   "only_for_target_os_tags": [
     "linux"
   ],
-  "soft_uoa": "cbb4893bed2c1049", 
-  "suggested_path": "lib-orion-qt",
+  "soft_uoa": "f29450aa13250654", 
+  "suggested_path": "tool-ck-gui-prebuilt",
   "process_script": "install",
   "use_scripts_from_another_entry": {
     "data_uoa": "cd9ccc74060b3d18",
     "module_uoa": "script"
   },
   "tags": [
-    "lib",
-    "orion-qt",
-    "vqt",
-    "vsrc",
-    "v0.1",
-    "v0",
-    "channel-stable" 
+    "tool", 
+    "ck-gui",
+    "vprebuilt"
   ]
 }

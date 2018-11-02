@@ -1,3 +1,4 @@
 *.user
 *tmp/
+*out/
 program/ck-gui-qt/bin/ck-gui*
