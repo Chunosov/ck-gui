@@ -7,13 +7,12 @@
 #include "searchpackageswindow.h"
 #include "searchprogramswindow.h"
 #include "texteditorwindow.h"
-#include "orion/widgets/OriMdiToolBar.h"
-#include "orion/tools/OriSettings.h"
+#include "widgets/OriMdiToolBar.h"
+#include "tools/OriSettings.h"
 
 #include <QApplication>
 #include <QDebug>
 #include <QDesktopWidget>
-#include <QDockWidget>
 #include <QFileDialog>
 #include <QMdiArea>
 #include <QMdiSubWindow>
@@ -34,20 +33,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     createMenu();
     createToolBars();
-    createDocks();
 
     // set initial window geometry
     adjustSize();
     auto desktop = QApplication::desktop()->availableGeometry(this);
-    resize(desktop.width()*0.75, desktop.height()*0.75);
+    resize(desktop.width()*3/4, desktop.height()*3/4);
     move(desktop.center() - rect().center());
 
     // open first tool window
     QTimer::singleShot(100, this, &MainWindow::runFirstCommand);
-}
-
-MainWindow::~MainWindow()
-{
 }
 
 void MainWindow::createMenu()
@@ -66,10 +60,6 @@ void MainWindow::createMenu()
 void MainWindow::createToolBars()
 {
     addToolBar(Qt::BottomToolBarArea, new Ori::Widgets::MdiToolBar(tr("Windows"), _mdiArea));
-}
-
-void MainWindow::createDocks()
-{
 }
 
 void MainWindow::onError(const QString& msg)

@@ -1,0 +1,41 @@
+{
+  "customize": {
+    "install_env": {
+      "PACKAGE_GIT": "YES",
+      "PACKAGE_GIT_CHECKOUT": "v0.1",
+      "PACKAGE_SUB_DIR": "src",
+      "PACKAGE_SKIP_LINUX_MAKE": "YES",
+      "PACKAGE_SKIP_CLEAN_OBJ": "YES",
+      "PACKAGE_URL": "https://github.com/orion-project/orion-qt"
+    },
+    "version": "0.1"
+  },
+  "end_full_path": {
+    "linux": "src/orion.pri", 
+    "win": "src/orion.pri"
+  },
+  "only_for_host_os_tags": [
+    "linux",
+    "win"
+  ],
+  "only_for_target_os_tags": [
+    "linux",
+    "win"
+  ],
+  "soft_uoa": "cbb4893bed2c1049", 
+  "suggested_path": "lib-orion-qt",
+  "process_script": "install",
+  "use_scripts_from_another_entry": {
+    "data_uoa": "cd9ccc74060b3d18",
+    "module_uoa": "script"
+  },
+  "tags": [
+    "lib",
+    "orion-qt",
+    "vqt",
+    "vsrc",
+    "v0.1",
+    "v0",
+    "channel-stable" 
+  ]
+}

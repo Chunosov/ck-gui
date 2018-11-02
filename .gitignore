@@ -1,4 +1,3 @@
 *.user
-bin/ck-gui*
-out
-tmp
+*tmp/
+program/ck-gui-qt/bin/ck-gui*

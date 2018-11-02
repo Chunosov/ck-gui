@@ -22,8 +22,6 @@ public:
 class CK
 {
 public:
-    CK();
-
     static CK& instance();
 
     CkEntry queryEnvByUid(const QString& uid);
@@ -51,6 +49,8 @@ public:
     static QString makePath(const QStringList& parts);
 
 private:
+    CK();
+
     QProcess _ck;
     QStringList _args;
 

@@ -1,0 +1,21 @@
+{
+  "auto_detect": "yes",
+  "customize": {
+    "check_that_exists": "yes",
+    "ck_version": 10,
+    "env_prefix": "CK_ENV_LIB_ORION_QT",
+    "limit_recursion_dir_search": {
+      "linux": 5, 
+      "win": 5
+    }, 
+    "soft_file": {
+      "linux": "src/orion.pri",
+      "win": "src/orion.pri"
+    }
+  },
+  "soft_name": "orion-qt development library",
+  "tags": [
+    "lib", 
+    "orion-qt"
+  ]
+}

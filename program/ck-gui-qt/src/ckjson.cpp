@@ -107,15 +107,30 @@ QVector<CkEnvDep> CkEnvMeta::deps() const
 
 //-----------------------------------------------------------------------------
 
+QString CkInfo::infoFileFullPath(const QString& path)
+{
+    return CK::makePath({path, ".cm", "info.json" });
+}
+
 CkInfo::CkInfo(const QString& path)
 {
-    open(CK::makePath({path, ".cm", "info.json" }));
+    open(infoFileFullPath(path));
+}
+
+bool CkInfo::isValid(const QString& path)
+{
+    return QFile::exists(infoFileFullPath(path));
 }
 
 //-----------------------------------------------------------------------------
 
 CkEnvInfo::CkEnvInfo(const QString& uid) : CkInfo(CK::envPath(uid))
 {
+}
+
+bool CkEnvInfo::isValid(const QString& uid)
+{
+    return CkInfo::isValid(CK::envPath(uid));
 }
 
 //-----------------------------------------------------------------------------

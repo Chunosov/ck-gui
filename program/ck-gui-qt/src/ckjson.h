@@ -100,12 +100,19 @@ public:
 
     QString backup_data_uid() const { return valueStr("backup_data_uid"); }
     QString data_name() const { return valueStr("data_name"); }
+
+    static bool isValid(const QString& path);
+
+private:
+    static QString infoFileFullPath(const QString& path);
 };
 
 class CkEnvInfo : public CkInfo
 {
 public:
     CkEnvInfo(const QString& uid);
+
+    static bool isValid(const QString& uid);
 };
 
 #endif // CKJSON_H
