@@ -50,15 +50,15 @@ def ck_access(params_json, skip_error_codes = []):
 # Initialize module
 
 def init(i):
-  """
+  '''
   Input:  {}
 
   Output: {
-            return       - return code =  0, if successful
-                                       >  0, if error
-            (error)      - error text if return > 0
-          }
-  """
+    return  - return code =  0, if successful
+                          >  0, if error
+    (error) - error text if return > 0
+  }
+  '''
   return {'return': 0}
 
 
@@ -66,17 +66,17 @@ def init(i):
 # Run ck-gui program
 
 def run(i):
-  """
+  '''
   Input:  {
     recompile - compile program before run even though it is already compiled
     prebuilt  - try to run prebuilt package, install package if env is not found
-          }
+  }
   Output: {
-            return       - return code =  0, if successful
-                                       >  0, if error
-            (error)      - error text if return > 0
-          }
-  """
+    return  - return code =  0, if successful
+                          >  0, if error
+    (error) - error text if return > 0
+  }
+  '''
   try:
     if i.get('prebuilt') == 'yes':
       ck.out('Try to run prebuilt package ...')
@@ -96,11 +96,12 @@ def _run_program(i):
   r = ck_access({'action': 'search',
                  'module_uoa': 'program',
                  'add_meta': 'yes',
-                 'tags': 'ck-gui'})
+                 'tags': 'ck-gui'
+  })
   programs = r['lst']
 
   if not programs:
-   CKException.throw('No suitable programs found')
+    CKException.throw('No suitable programs found')
 
   if len(programs) > 1:
     # TODO: select a program to run
@@ -117,18 +118,23 @@ def _run_program(i):
     # TODO: need to clean tmp dir, otherwise make says: Nothing to be done for 'first'.
     ck_access({'action': 'compile',
                'module_uoa': 'program',
-               'data_uoa': program['data_uoa']})
+               'data_uoa': program['data_uoa'],
+               'out': 'con'
+    })
 
   ck_access({'action': 'run',
              'module_uoa': 'program',
-             'data_uoa': program['data_uoa']})
+             'data_uoa': program['data_uoa'],
+             'out': 'con'
+  })
 
 
 def _run_prebuilt():
   # TODO: need to account platform when searching for env
   r = ck_access({'action': 'search',
                  'module_uoa': 'env',
-                 'tags': 'tool,ck-gui,vprebuilt'})
+                 'tags': 'tool,ck-gui,vprebuilt'
+  })
   envs = r['lst']
 
   if not envs:
@@ -147,7 +153,8 @@ def _run_prebuilt():
 
   r = ck_access({'action': 'load',
                  'module_uoa': 'env',
-                 'data_uoa': env['data_uoa']})
+                 'data_uoa': env['data_uoa']
+  })
 
   tool_path = r.get('dict',{}).get('customize',{}).get('full_path')
   if not tool_path:
@@ -161,11 +168,12 @@ def _install_prebuilt():
 
   r = ck_access({'action': 'search',
                  'module_uoa': 'package',
-                 'tags': 'tool,ck-gui,vprebuilt'})
+                 'tags': 'tool,ck-gui,vprebuilt'
+  })
   packages = r['lst']
 
   if not packages:
-   CKException.throw('No suitable packages found')
+    CKException.throw('No suitable packages found')
 
   if len(packages) > 1:
     # TODO: select a package to install
@@ -177,4 +185,6 @@ def _install_prebuilt():
 
   ck_access({'action': 'install',
              'module_uoa': 'package',
-             'data_uoa': package['data_uoa']})
+             'data_uoa': package['data_uoa'],
+             'out': 'con'
+  })

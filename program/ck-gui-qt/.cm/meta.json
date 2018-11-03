@@ -18,7 +18,11 @@
       "local": "yes",
       "name": "Qt library",
       "sort": 1,
-      "tags": "lib,qt"
+      "tags": "lib,qt",
+      "version_from": [
+        5,
+        5
+      ]
     },
     "lib-orion-qt": {
       "local": "yes",
