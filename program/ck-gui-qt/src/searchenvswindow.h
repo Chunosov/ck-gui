@@ -20,14 +20,16 @@ protected:
     void resultSelected(const QString& uid) override;
     Features features() const override { return {CanSearch, CanSearchByTags, CanSearchByUid}; }
 
+private slots:
+    void editEnvScript();
+    void refreshEnv();
+    void deleteEnv();
+
 private:
     enum SearchMode { SEARCH_ALL, SEARCH_TAG, SEARCH_UID };
     void populateEnvs(const QString& tags, const QString &uid);
     void showEnvInfo(const CkEnvInfo &info, const CkEnvMeta& meta);
-    void editEnvScript();
     void repeatSearch();
-    void refreshEnv();
-    void deleteEnv();
 
     SearchMode _lastSearch;
 };

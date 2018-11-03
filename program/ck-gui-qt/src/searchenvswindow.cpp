@@ -11,10 +11,10 @@ SearchEnvsWindow::SearchEnvsWindow(QWidget *parent) : SearchWindowBase(parent)
 {
     setTitleAndIcon("Envs", ":/icon/envs");
 
-    _resultsContextMenu->addAction("Edit script", this, &SearchEnvsWindow::editEnvScript);
+    _resultsContextMenu->addAction("Edit script", this, SLOT(editEnvScript()));
     _resultsContextMenu->addSeparator();
-    _resultsContextMenu->addAction("Refresh env", this, &SearchEnvsWindow::refreshEnv);
-    _resultsContextMenu->addAction("Delete env", this, &SearchEnvsWindow::deleteEnv);
+    _resultsContextMenu->addAction("Refresh env", this, SLOT(refreshEnv()));
+    _resultsContextMenu->addAction("Delete env", this, SLOT(deleteEnv()));
 
     findAll();
 }
