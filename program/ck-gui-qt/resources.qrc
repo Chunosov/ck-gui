@@ -1,10 +1,10 @@
 <RCC>
     <qresource prefix="/icon">
-        <file alias="main">./img/main-icon.svg</file>
-        <file alias="envs">./img/gears.svg</file>
-        <file alias="editor">./img/pencil.svg</file>
-        <file alias="repos">./img/warehouse.svg</file>
-        <file alias="programs">./img/binary.svg</file>
-        <file alias="packages">./img/boxes.svg</file>
+        <file alias="main">./img/main-icon.png</file>
+        <file alias="envs">./img/gears.png</file>
+        <file alias="editor">./img/pencil.png</file>
+        <file alias="repos">./img/warehouse.png</file>
+        <file alias="programs">./img/binary.png</file>
+        <file alias="packages">./img/boxes.png</file>
     </qresource>
 </RCC>

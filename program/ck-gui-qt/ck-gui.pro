@@ -4,21 +4,27 @@
 #
 #-------------------------------------------------
 
-QT += core gui widgets svg
-CONFIG += qscintilla2
-
-ORION_INCLUDE = $$(ORION_QT_PATH)/orion.pri
-
-!exists($$ORION_INCLUDE) {
-  error(Path to orion-qt library is not set or incorrect. \
-    Download library from https://github.com/orion-project/orion-qt \
-    and provide path to it via environment variable ORION_QT_PATH)
-}
+QT += core gui widgets
 
 TARGET = ck-gui
 TEMPLATE = app
 DESTDIR = $$_PRO_FILE_PWD_/bin
 
+QSCINTILLA_PATH=$$(QSCINTILLA_PATH)
+!exists($$QSCINTILLA_PATH/Qsci/qsciscintilla.h) {
+  error(Path to QScintilla library is not set or incorrect. \
+    Download library from https://pypi.org/project/QScintilla \
+    build it  and provide path to it via environment variable QSCINTILLA_PATH)
+}
+INCLUDEPATH += $$QSCINTILLA_PATH
+unix:LIBS += "-L$$QSCINTILLA_PATH" -lqscintilla2_qt5
+
+ORION_INCLUDE = $$(ORION_QT_PATH)/orion.pri
+!exists($$ORION_INCLUDE) {
+  error(Path to orion-qt library is not set or incorrect. \
+    Download library from https://github.com/orion-project/orion-qt \
+    and provide path to it via environment variable ORION_QT_PATH)
+}
 include($$ORION_INCLUDE)
 
 CONFIG += c++14
