@@ -51,10 +51,10 @@ void MainWindow::createMenu()
     menuBar()->setNativeMenuBar(false);
 
     m = menuBar()->addMenu(tr("&Tool"));
-    m->addAction(QIcon(":/icon/repos"), tr("Repos"), this, &MainWindow::openReposWindow);
-    m->addAction(QIcon(":/icon/envs"), tr("Envs"), this, &MainWindow::openEnvsWindow);
-    m->addAction(QIcon(":/icon/packages"), tr("Packages"), this, &MainWindow::openPackagesWindow);
-    m->addAction(QIcon(":/icon/programs"), tr("Programs"), this, &MainWindow::openProgramsWindow);
+    m->addAction(QIcon(":/icon/repos"), tr("Repos"), this, SLOT(openReposWindow()));
+    m->addAction(QIcon(":/icon/envs"), tr("Envs"), this, SLOT(openEnvsWindow()));
+    m->addAction(QIcon(":/icon/packages"), tr("Packages"), this, SLOT(openPackagesWindow()));
+    m->addAction(QIcon(":/icon/programs"), tr("Programs"), this, SLOT(openProgramsWindow()));
 }
 
 void MainWindow::createToolBars()

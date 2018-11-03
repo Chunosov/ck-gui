@@ -14,16 +14,18 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
 
+private slots:
+    void openReposWindow();
+    void openEnvsWindow();
+    void openPackagesWindow();
+    void openProgramsWindow();
+
 private:
     QMdiArea* _mdiArea;
 
     void createMenu();
     void createToolBars();
     void onError(const QString& msg);
-    void openReposWindow();
-    void openEnvsWindow();
-    void openPackagesWindow();
-    void openProgramsWindow();
     void textEditorRequested(const QString& fileName, const QString &editorTitle);
     void showSubWindow(QWidget* w);
     void runFirstCommand();
