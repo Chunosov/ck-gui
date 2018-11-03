@@ -145,9 +145,9 @@ SearchWindowBase::SearchWindowBase(QWidget *parent) : QWidget(parent)
     _resultsContextMenu = new QMenu(this);
     _resultsContextMenuHeader = makeHeaderItem(_resultsContextMenu);
     _resultsContextMenu->addSeparator();
-    _resultsContextMenu->addAction("Copy UID", this, &SearchWindowBase::copyEnvUid);
+    _resultsContextMenu->addAction("Copy UID", this, SLOT(copyEnvUid()));
     _resultsContextMenu->addSeparator();
-    _resultsContextMenu->addAction("Edit meta", this, &SearchWindowBase::editMeta);
+    _resultsContextMenu->addAction("Edit meta", this, SLOT(editMeta()));
 }
 
 void SearchWindowBase::setTitleAndIcon(const QString& title, const char* iconPath)

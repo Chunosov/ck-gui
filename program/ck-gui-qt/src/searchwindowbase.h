@@ -79,6 +79,9 @@ public:
     void setTitleAndIcon(const QString& title, const char* iconPath);
     void applyFeatures();
 
+public slots:
+    virtual void editMeta() {}
+
 protected:
     QMenu *_resultsContextMenu;
     QListWidget* _resultsList;
@@ -87,7 +90,6 @@ protected:
     virtual void findByTags();
     virtual void findByUid();
     virtual void findByName();
-    virtual void editMeta() {}
     virtual void resultSelected(const QString& uid) { Q_UNUSED(uid); }
     virtual Features features() const { return Features(); }
 
@@ -99,14 +101,15 @@ protected:
     void setResults(SearchResults&& r);
     void showHtmlInfo(const QString& html);
 
+private slots:
+    void copyEnvUid() const;
+
 private:
     QLineEdit* _searchBox;
     QWidget* _searchPanel;
     QAction *_resultsContextMenuHeader;
     QLabel* _titleResults;
     QPushButton *_findByTagsButton, *_findByUidButton, *_findByNameButton;
-
-    void copyEnvUid() const;
 
     static QAction* makeHeaderItem(QMenu* menu);
     static QLabel* makeTitleLabel(const QString& title);
