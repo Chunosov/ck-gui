@@ -1,0 +1,15 @@
+{
+  "backup_data_uid": "694943589fc8fb59", 
+  "backup_module_uid": "5e1100048ab875d7", 
+  "backup_module_uoa": "soft", 
+  "control": {
+    "engine": "CK", 
+    "iso_datetime": "2018-11-03T19:06:11.266477", 
+    "version": [
+      "1", 
+      "9", 
+      "5"
+    ]
+  }, 
+  "data_name": "lib.qscintilla"
+}

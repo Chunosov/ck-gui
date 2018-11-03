@@ -17,6 +17,7 @@ QSCINTILLA_PATH=$$(QSCINTILLA_PATH)
     build it  and provide path to it via environment variable QSCINTILLA_PATH)
 }
 INCLUDEPATH += $$QSCINTILLA_PATH
+#TODO: win32:LIBS += "$$QSCINTILLA_PATH/?.lib"
 unix:LIBS += "-L$$QSCINTILLA_PATH" -lqscintilla2_qt5
 
 ORION_INCLUDE = $$(ORION_QT_PATH)/orion.pri

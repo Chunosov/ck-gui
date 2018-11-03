@@ -22,6 +22,10 @@
       "version_from": [
         5,
         5
+      ],
+      "version_to": [
+        5,
+        999
       ]
     },
     "lib-orion-qt": {
@@ -29,6 +33,12 @@
       "name": "orion-qt library",
       "sort": 2,
       "tags": "lib,orion-qt"
+    },
+    "lib-qscintilla": {
+      "local": "yes",
+      "name": "QScintilla library",
+      "sort": 3,
+      "tags": "lib,qscintilla,vqt5"
     }
   },
   "run_deps": {
@@ -37,6 +47,12 @@
       "name": "Qt library",
       "sort": 1,
       "tags": "lib,qt"
+    },
+    "lib-qscintilla": {
+      "local": "yes",
+      "name": "QScintilla library",
+      "sort": 2,
+      "tags": "lib,qscintilla,vqt5"
     }
   },
   "compiler_env": "CK_CXX",

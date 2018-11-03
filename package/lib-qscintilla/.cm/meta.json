@@ -1,0 +1,66 @@
+{
+  "customize": {
+    "install_env": {
+      "PACKAGE_WGET": "YES",
+      "PACKAGE_UNGZIP": "YES",
+      "PACKAGE_UNTAR": "YES",
+      "PACKAGE_SKIP_LINUX_MAKE": "YES",
+      "PACKAGE_SKIP_CLEAN_OBJ": "YES",
+      "PACKAGE_NAME": "QScintilla_gpl-2.10.4.tar.gz",
+      "PACKAGE_NAME1": "QScintilla_gpl-2.10.4.tar",
+      "PACKAGE_URL": "https://netix.dl.sourceforge.net/project/pyqt/QScintilla2/QScintilla-2.10.4"
+    },
+    "version": "2.10.4"
+  },
+  "deps": {
+    "compiler": {
+      "local": "yes",
+      "name": "C++ compiler",
+      "sort": 0,
+      "tags": "compiler,lang-cpp"
+    },
+    "lib-qt": {
+      "local": "yes",
+      "name": "Qt library",
+      "sort": 1,
+      "tags": "lib,qt",
+      "version_from": [
+        4,
+        8
+      ],
+      "version_to": [
+        5,
+        999
+      ]
+    }
+  },
+  "end_full_path": {
+    "linux": "QScintilla_gpl-2.10.4/Qt4Qt5/Qsci/qsciscintilla.h", 
+    "win": "QScintilla_gpl-2.10.4/Qt4Qt5/Qsci/qsciscintilla.h"
+  },
+  "only_for_host_os_tags": [
+    "linux"
+  ],
+  "only_for_target_os_tags": [
+    "linux"
+  ],
+  "soft_uoa": "694943589fc8fb59", 
+  "suggested_path": "lib-qscintilla",
+  "process_script": "install",
+  "use_scripts_from_another_entry": {
+    "data_uoa": "cd9ccc74060b3d18",
+    "module_uoa": "script"
+  },
+  "tags": [
+    "lib", 
+    "qscintilla", 
+    "vqt",
+    "vqt4",
+    "vqt5",
+    "vsrc",
+    "v2.10.4",
+    "v2.10",
+    "v2",
+    "channel-stable" 
+  ]
+}

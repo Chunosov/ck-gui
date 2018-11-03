@@ -1,0 +1,22 @@
+{
+  "auto_detect": "yes", 
+  "customize": {
+    "check_that_exists": "yes", 
+    "ck_version": 10, 
+    "env_prefix": "CK_ENV_LIB_QSCINTILLA", 
+    "limit_recursion_dir_search": {
+      "linux": 5, 
+      "win": 5
+    }, 
+    "soft_file": {
+      "linux": "Qt4Qt5/Qsci/qsciscintilla.h", 
+      "win": "Qt4Qt5/Qsci/qsciscintilla.h"
+    }
+  }, 
+  "soft_name": "QScintilla development library", 
+  "tags": [
+    "lib", 
+    "qscintilla",
+    "vqt"
+  ]
+}

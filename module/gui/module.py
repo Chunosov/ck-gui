@@ -6,6 +6,7 @@
 #
 
 import os
+import shutil
 import subprocess
 
 cfg = {}  # Will be updated by CK (meta description of this module)
@@ -68,7 +69,10 @@ def init(i):
 def run(i):
   '''
   Input:  {
+    rebuild
+      or
     recompile - compile program before run even though it is already compiled
+
     prebuilt  - try to run prebuilt package, install package if env is not found
   }
   Output: {
@@ -114,8 +118,10 @@ def _run_program(i):
     program_path = os.path.join(program['path'], 'tmp', program_file)
     return os.path.isfile(program_path)
 
-  if i.get('recompile') == 'yes' or not is_program_compiled():
-    # TODO: need to clean tmp dir, otherwise make says: Nothing to be done for 'first'.
+  if i.get('recompile') == 'yes' or i.get('rebuild') == 'yes' or not is_program_compiled():
+    # Clean tmp dir, otherwise make says: Nothing to be done for 'first'
+    shutil.rmtree(os.path.join(program['path'], 'tmp'))
+
     ck_access({'action': 'compile',
                'module_uoa': 'program',
                'data_uoa': program['data_uoa'],
@@ -125,6 +131,7 @@ def _run_program(i):
   ck_access({'action': 'run',
              'module_uoa': 'program',
              'data_uoa': program['data_uoa'],
+             'reuse_deps': 'yes',
              'out': 'con'
   })
 
