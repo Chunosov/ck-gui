@@ -1,6 +1,7 @@
 {
   "customize": {
     "install_env": {
+      "PACKAGE_PATCH": "YES",
       "PACKAGE_GIT": "YES",
       "PACKAGE_GIT_CHECKOUT": "v0.1",
       "PACKAGE_SUB_DIR": "src",

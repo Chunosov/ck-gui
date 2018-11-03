@@ -1,0 +1,35 @@
+diff --git a/helpers/OriWidgets.cpp b/helpers/OriWidgets.cpp
+index 58a795f..e67b746 100644
+--- a/helpers/OriWidgets.cpp
++++ b/helpers/OriWidgets.cpp
+@@ -193,6 +193,8 @@ void append(QMenu* menu, QObject* item)
+     }
+ }
+ 
++#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
++// QMenu::addAction(... , Functor functor, ...) was introduced in Qt 5.6
+ QMenu* makeToggleWidgetsMenu(QMenu* parent, const QString& title, std::initializer_list<QWidget*> widgets)
+ {
+     QMenu* menu = parent->addMenu(title);
+@@ -209,6 +211,7 @@ QMenu* makeToggleWidgetsMenu(QMenu* parent, const QString& title, std::initializ
+     });
+     return menu;
+ }
++#endif
+ 
+ //--------------------------------------------------------------------------------------------------
+ 
+diff --git a/helpers/OriWidgets.h b/helpers/OriWidgets.h
+index 9f9cc38..ba4dcca 100644
+--- a/helpers/OriWidgets.h
++++ b/helpers/OriWidgets.h
+@@ -48,7 +48,9 @@ QMenu* menu(const QString& title, QWidget *parent, std::initializer_list<QObject
+ QMenu* populate(QMenu* menu, std::initializer_list<QObject*> items);
+ void append(QMenu* menu, QObject* item);
+ 
++#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
+ QMenu* makeToggleWidgetsMenu(QMenu* parent, const QString& title, std::initializer_list<QWidget*> widgets);
++#endif
+ 
+ QToolBar* toolbar(std::initializer_list<QObject*> items);
+ QToolBar* populate(QToolBar* toolbar, std::initializer_list<QObject*> items);
