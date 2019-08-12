@@ -14,7 +14,7 @@ Currently there are several search scenarios:
 
 For most of entities commands for displaying/editing meta (and script for env) are also available (but be careful about the [issue](https://github.com/Chunosov/ck-gui/issues/1) with scintilla editor).
 
-![Common screen](img/screenshots/screen-000.png) 
+![Common screen](program/ck-gui-qt/img/screenshots/screen-000.png) 
 
 ## Prebuilds
 
